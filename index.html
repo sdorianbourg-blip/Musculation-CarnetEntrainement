@@ -1,0 +1,3641 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Carnet d'entraînement – Musculation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-soft: #dbeafe;
+      --primary-dark: #1d4ed8;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --bg: #f3f4f6;
+      --card-bg: #ffffff;
+      --border: #e5e7eb;
+      --text: #111827;
+      --muted: #6b7280;
+      --radius-pill: 999px;
+      --radius-card: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .app {
+      max-width: 1100px;
+      margin: 12px auto 40px;
+      padding: 0 10px;
+    }
+
+    header {
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+      margin: 0 0 2px;
+    }
+
+    header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-card);
+      padding: 14px 12px 16px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, .06);
+      margin-top: 12px;
+      border: 1px solid var(--border);
+    }
+
+    h2 {
+      margin: 0 0 4px;
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 3px;
+      font-weight: 600;
+      font-size: 0.86rem;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 7px 9px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+      outline: none;
+      background: #f9fafb;
+      color: var(--text);
+      transition: border 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+    /* ---- Curseur état de forme style iOS ---- */
+.state-box {
+  background: #ffffff;
+  padding: 14px 16px;
+  border-radius: 14px;
+  box-shadow: 0 2px 7px rgba(0,0,0,0.08);
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.state-box label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.state-value {
+  text-align: center;
+  margin-top: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.state-desc {
+  font-size: 0.85rem;
+  margin-top: 4px;
+  color: #4b5563;
+}
+
+input[type="range"].state-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 5px;
+  background: #d1d5db;
+  outline: none;
+}
+
+input[type="range"].state-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #3b82f6;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  cursor: pointer;
+  margin-top: -11px;
+}
+
+input[type="range"].state-slider::-webkit-slider-runnable-track {
+  background: #3b82f6;
+}
+
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, .18);
+      background: #ffffff;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .col { flex: 1 1 200px; }
+
+    .btn {
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      padding: 8px 14px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--primary);
+      border-color: var(--border);
+    }
+
+    .btn-danger {
+      background: #ffffff;
+      color: var(--danger);
+      border-color: var(--border);
+    }
+
+    .btn-sm {
+      padding: 5px 9px;
+      font-size: 0.8rem;
+    }
+
+    .breadcrumb {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .link {
+      color: var(--primary-dark);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .muted {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .badge-class {
+      display: inline-flex;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-left: 6px;
+    }
+
+    /* TABLES */
+
+    .students-table-wrapper,
+    .scroll-table {
+      margin-top: 6px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.86rem;
+      background: #ffffff;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 6px 7px;
+      text-align: left;
+    }
+
+    th {
+      background: #f3f4f6;
+      color: var(--muted);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* --- Colonnes à remplir par l’observateur --- */
+.obs-header {
+  background: #e0f2fe;   /* bleu très clair pour l’en-tête */
+  font-weight: 600;
+}
+
+/* --- Colonnes à remplir par l’observateur --- */
+.obs-header {
+  background: #e0f2fe;   /* bleu très clair pour l’en-tête */
+  font-weight: 600;
+}
+
+/* Cellules du tableau observateur */
+.obs-cell {
+  background: #E1ECFF;      /* bleu clair */
+}
+
+/* Champs à remplir par l’observateur (inputs, selects) */
+.observer-field {
+  background-color: #E1ECFF;
+  border: 1px solid #AFC9F5;
+  border-radius: 6px;
+}
+/* Champs importants à remplir par l'élève */
+.important-field {
+  background-color: #EAF3FF;
+  border: 1px solid #B6D4FF;
+  border-radius: 6px;
+}
+
+/* Bloc ressenti (tableau coloré) */
+.ressenti-block {
+  background-color: #FFE7E0;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #FFCEC0;
+  margin-top: 8px;
+}
+
+/* Bloc bilan + validation */
+.lesson-validation-block {
+  background-color: #DFF6E0;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #A8E2B0;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.lesson-validation-block label {
+  font-weight: 600;
+}
+
+    .students-table td:last-child { text-align: right; }
+
+    .student-name-btn {
+      background: transparent;
+      border: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+      font-size: 0.9rem;
+      color: var(--primary-dark);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .delete-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--danger);
+      font-size: 0.9rem;
+    }
+
+    /* TABS */
+
+    .tabbar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-top: 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-btn {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      padding: 7px 12px;
+      font-size: 0.85rem;
+      background: #ffffff;
+      cursor: pointer;
+      white-space: nowrap;
+      color: var(--muted);
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .tab-panel { display: none; margin-top: 10px; }
+    .tab-panel.active { display: block; }
+
+    .section-title {
+      font-weight: 600;
+      margin-top: 4px;
+      margin-bottom: 4px;
+      font-size: 0.95rem;
+    }
+
+    details.lesson {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+      background: #ffffff;
+    }
+
+    details.lesson summary {
+      padding: 8px 10px;
+      cursor: pointer;
+      font-weight: 600;
+      list-style: none;
+      font-size: 0.94rem;
+    }
+
+    details.lesson[open] {
+      box-shadow: 0 8px 20px rgba(15, 23, 42, .08);
+    }
+
+    details.lesson summary::-webkit-details-marker { display: none; }
+
+    .lesson-body {
+      padding: 0 10px 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Timer de séance dans chaque leçon */
+.lesson-timer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #f9fafb;
+}
+
+.lesson-timer .timer-display {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 2rem;        /* ← augmente encore ici si tu veux */
+  padding: 8px 16px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 2px solid #2563eb;
+  color: #2563eb;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(37,99,235,0.2);
+}
+
+
+
+
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .pill-info {
+      display: inline-flex;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      background: #f3f4f6;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* Couleurs barème (Degré 1 à 4) */
+
+    .deg1 { background: #fee2e2; }
+    .deg2 { background: #ffedd5; }
+    .deg3 { background: #dcfce7; }
+    .deg4 { background: #bbf7d0; }
+
+    /* Couleurs échelle de ressenti (Niveau 1 = vert → 4 = rouge) */
+
+    .res1 { background: #bbf7d0; } /* très facile */
+    .res2 { background: #fef9c3; }
+    .res3 { background: #fed7aa; }
+    .res4 { background: #fecaca; } /* très difficile */
+
+    .scale-table td,
+    .scale-table th {
+      font-size: 0.8rem;
+      padding: 4px 5px;
+    }
+
+    .center { text-align: center; }
+
+    /* Auto-évaluation */
+
+    .self-eval-box {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+    }
+
+    .self-eval-row {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(4, 0.6fr);
+      gap: 4px;
+      align-items: center;
+      font-size: 0.82rem;
+      margin-bottom: 4px;
+    }
+
+    .self-eval-label {
+      font-weight: 500;
+    }
+
+    .self-eval-option {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ---- Liste d'exercices ---- */
+
+.exercise-filters {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.exercise-list {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.exercise-item {
+  padding: 10px 12px;
+  background: #f9fafb;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background 0.15s, border 0.15s;
+}
+
+.exercise-item:hover {
+  background: #eef2ff;
+  border-color: var(--primary);
+}
+
+.exercise-title-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  align-items: center;
+}
+
+.exercise-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.exercise-badges {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.exercise-badge {
+  font-size: 0.74rem;
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+}
+
+.exercise-badge.category-haut {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+}
+
+.exercise-badge.category-bas {
+  border-color: #bbf7d0;
+  background: #ecfdf3;
+}
+
+.exercise-badge.category-abdos {
+  border-color: #facc15;
+  background: #fef9c3;
+}
+
+.exercise-badge.category-cardio {
+  border-color: #fed7aa;
+  background: #fff7ed;
+}
+
+.exercise-muscles {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ---- Modale fiche exercice ---- */
+
+.exercise-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.exercise-modal-content {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px 16px 16px;
+  width: 92%;
+  max-width: 480px;
+  box-shadow: 0 12px 30px rgba(15,23,42,0.25);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.close-ex-modal {
+  float: right;
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 700;
+  color: #9ca3af;
+}
+
+.close-ex-modal:hover {
+  color: #4b5563;
+}
+
+.exercise-modal h3 {
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+.exercise-modal h4 {
+  margin-bottom: 4px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.exercise-modal ul {
+  margin: 0 0 4px 18px;
+  padding: 0;
+  font-size: 0.86rem;
+}
+
+.exercise-video-link {
+  display: inline-flex;
+  margin-top: 4px;
+  font-size: 0.84rem;
+  color: var(--primary-dark);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+    @media (max-width: 640px) {
+      .app { margin-top: 8px; }
+      header h1 { font-size: 1.4rem; }
+      .card { padding: 12px 10px 14px; }
+      table { font-size: 0.8rem; }
+      .scale-table td, .scale-table th { font-size: 0.75rem; }
+      .btn { width: 100%; }
+      .self-eval-row {
+        grid-template-columns: 1.4fr repeat(4, 0.7fr);
+      }
+    }
+
+/* --------- THÈME CLAIR MODERNE / STYLE INSTIT --------- */
+
+/* Fond global doux */
+body {
+  margin: 0;
+  background: radial-gradient(circle at top left, #f9fafb 0, #e5e7eb 42%, #e5e7eb 100%);
+  color: var(--text);
+}
+
+/* Conteneur type “appli mobile” */
+.app {
+  max-width: 480px;
+  margin: 16px auto 40px;
+  padding: 0 12px;
+}
+
+/* Titre plus présent mais institutionnel */
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+header p {
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+/* Cartes blanches propres */
+.card {
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  box-shadow:
+    0 14px 30px rgba(15,23,42,0.08),
+    0 0 0 1px rgba(148,163,184,0.12);
+  padding: 16px 14px 18px;
+}
+
+/* Champs de formulaire */
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+  background: #f9fafb;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  color: #111827;
+  font-size: 0.9rem;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.16);
+  background: #ffffff;
+}
+
+/* Boutons principaux – bleu EPS sobre */
+.btn {
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(37,99,235,0.35);
+}
+
+.btn:hover {
+  filter: brightness(1.03);
+}
+
+/* Bouton secondaire : style contour */
+.btn-secondary {
+  background: #ffffff;
+  border: 1px solid #cbd5f5;
+  color: #1d4ed8;
+  box-shadow: none;
+}
+
+/* Bouton supprimer : contour rouge léger */
+.btn-danger {
+  background: #ffffff;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  box-shadow: none;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.74rem;
+}
+
+/* Barre d’onglets */
+.tabbar {
+  margin-top: 10px;
+  padding: 4px;
+  border-radius: 999px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  gap: 4px;
+}
+
+.tab-btn {
+  flex: 1 1 auto;
+  border-radius: 999px;
+  border: none;
+  padding: 7px 6px;
+  font-size: 0.76rem;
+  background: transparent;
+  color: #6b7280;
+}
+
+.tab-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 8px 16px rgba(37,99,235,0.35);
+}
+
+/* Tableaux en mode clair propre */
+table {
+  background: #ffffff;
+  color: #111827;
+}
+
+th {
+  background: #f9fafb;
+  color: #4b5563;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+td {
+  background: #ffffff;
+}
+
+/* Partie observateur en bleu très léger */
+.obs-header {
+  background: #e0f2fe;
+  color: #1e3a8a;
+}
+
+.obs-cell {
+  background: #eff6ff !important;
+}
+
+/* Boîte état de forme */
+.state-box {
+  background: #f9fafb;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(15,23,42,0.06);
+}
+
+.state-box label {
+  color: #4b5563;
+}
+
+.state-value {
+  font-size: 1.15rem;
+  color: #2563eb;
+}
+
+/* Slider */
+input[type="range"].state-slider {
+  background: #e5e7eb;
+}
+
+input[type="range"].state-slider::-webkit-slider-runnable-track {
+  background: linear-gradient(90deg, #2563eb, #1d4ed8);
+}
+
+/* Timer de séance : mis en avant mais sobre */
+.lesson-timer {
+  background: #f9fafb;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 16px rgba(15,23,42,0.07);
+}
+
+.lesson-timer .timer-display {
+  font-size: 2rem;
+  color: #111827;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 2px solid #2563eb;
+}
+
+/* Liste d’exercices */
+.exercise-item {
+  background: #f9fafb;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.exercise-item:hover {
+  background: #eef2ff;
+  border-color: #2563eb;
+}
+
+/* Modale exercice */
+.exercise-modal-content {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 18px 40px rgba(15,23,42,0.25);
+}
+
+/* Badges */
+.exercise-badge {
+  border-color: #e5e7eb;
+  background: #ffffff;
+}
+
+.exercise-badge.category-haut {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+}
+.exercise-badge.category-bas {
+  border-color: #bbf7d0;
+  background: #ecfdf3;
+}
+.exercise-badge.category-abdos {
+  border-color: #facc15;
+  background: #fef9c3;
+}
+.exercise-badge.category-cardio {
+  border-color: #fed7aa;
+  background: #fff7ed;
+}
+
+/* Encadré validation de la leçon */
+textarea[data-field="bilan"] {
+  background: #f9fafb;
+}
+
+input[type="checkbox"][data-field="validated"] {
+  accent-color: #2563eb;
+}
+
+@media (max-width: 640px) {
+  .app {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  .card {
+    border-radius: 16px;
+    padding: 14px 12px 16px;
+  }
+
+  .lesson-timer .timer-display {
+    font-size: 1.8rem;
+  }
+}
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  .card {
+    border-radius: 16px;
+    padding: 14px 10px 16px;
+  }
+
+  .lesson-timer .timer-display {
+    font-size: 1.8rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Carnet d'entraînement – Musculation</h1>
+    <p>Application locale pour suivre le travail des élèves (données stockées sur cet appareil).</p>
+  </header>
+
+  <!-- PAGE 1 : GESTION DES CLASSES -->
+  <section id="view-classes" class="card">
+    <h2>Mes classes</h2>
+    <p>Si tu effaces l’historique ou changes d’appareil, toutes les données seront perdues.</p>
+
+    <div class="row" style="margin-top:8px;">
+      <div class="col">
+        <label for="selectClass">Classe sélectionnée</label>
+        <select id="selectClass"></select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="newClassName">Nouvelle classe</label>
+        <input id="newClassName" type="text" placeholder="Ex : 206, 3eB, Term 2…">
+      </div>
+      <div class="col" style="display:flex;flex-direction:column;gap:6px;justify-content:flex-end;">
+        <button id="btnAddClass" class="btn">+ Ajouter une classe</button>
+        <button id="btnConfigTeams" class="btn btn-secondary">Configurer les élèves</button>
+        <button id="btnDeleteClass" class="btn btn-danger">Supprimer la classe</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 2 : ÉLÈVES -->
+  <section id="view-students" class="card" style="display:none;">
+    <div class="breadcrumb">
+      <span class="link" id="backToClasses">&larr; Retour aux classes</span>
+    </div>
+    <h2>Élèves de la classe <span id="studentsClassName"></span></h2>
+    <p>Ajoute les prénoms les uns à la suite des autres, puis clique sur « Ouvrir mon carnet ».</p>
+
+    <div class="row" style="margin-top:8px;">
+      <div class="col">
+        <label for="newStudentName">Ajouter un élève</label>
+        <input id="newStudentName" type="text" placeholder="Prénom (ex : Zoé)">
+      </div>
+      <div class="col" style="display:flex;align-items:flex-end;">
+        <button id="btnAddStudent" class="btn">+ Ajouter l'élève</button>
+      </div>
+    </div>
+
+    <div class="section-title">Liste des élèves</div>
+    <div class="students-table-wrapper">
+      <table class="students-table">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Prénom</th>
+          <th>Action</th>
+          <th>Supprimer</th>
+        </tr>
+        </thead>
+        <tbody id="studentsList"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- PAGE 3 : CARNET D'UN ÉLÈVE -->
+  <section id="view-carnet" class="card" style="display:none;">
+    <div class="breadcrumb">
+      <span class="link" id="backToStudents">&larr; Retour aux prénoms</span>
+    </div>
+    <h2>
+      Carnet d'entraînement de
+      <span id="carnetStudentName"></span>
+      <span class="badge-class" id="carnetClassName"></span>
+    </h2>
+
+    <!-- Onglets -->
+   <div class="tabbar">
+  <button class="tab-btn active" data-tab="muscles">Muscles</button>
+  <button class="tab-btn" data-tab="lessons">Mon carnet</button>
+  <button class="tab-btn" data-tab="evaluation">Évaluation</button>
+  <button class="tab-btn" data-tab="infos">Bon à savoir</button>
+  <button class="tab-btn" data-tab="exercises">Exercices</button>
+</div>
+
+
+    <!-- Onglet 1 : MUSCLES -->
+    <div id="tab-muscles" class="tab-panel active">
+      <div class="section-title">Exemples d’actions que permettent les muscles</div>
+      <p class="muted">
+        Complète les colonnes « Exemple d'exercice » et « N° sur le schéma ».
+      </p>
+
+      <div style="margin:6px 0 10px;">
+        <img src="schema-muscles.png"
+             alt="Schéma des principaux muscles."
+             style="max-width:100%;height:auto;border-radius:10px;border:1px solid var(--border);">
+      </div>
+
+      <div id="musclesSheetContainer" class="scroll-table"></div>
+    </div>
+
+    <!-- Onglet 2 : MON CARNET -->
+    <div id="tab-lessons" class="tab-panel">
+      <p class="muted">
+        Pour chaque leçon : choisis ton mobile, construis ta séance (échauffement + séries d’exercices),
+        remplis l’échelle de ressenti puis rédige un court bilan.
+      </p>
+      <div id="lessonsContainer"></div>
+    </div>
+
+    <!-- Onglet 3 : ÉVALUATION – BARÈME + AUTO-ÉVAL -->
+    <div id="tab-evaluation" class="tab-panel">
+      <div class="section-title">Barème d’évaluation – Musculation poids de corps</div>
+      <p class="muted">
+        Repères du référentiel officiel bac général / technologique – Musculation poids de corps.
+      </p>
+
+<!-- AFL1 Élément 1 -->
+      <div class="section-title">AFL1 – Élément 1 : motricité spécifique (trajet, posture, respiration, rythme, intensité, récupération) – /8 pts</div>
+      <div class="scroll-table">
+        <table class="scale-table">
+          <thead>
+          <tr>
+            <th>Degré</th>
+            <th class="deg1">Degré 1</th>
+            <th class="deg2">Degré 2</th>
+            <th class="deg3">Degré 3</th>
+            <th class="deg4">Degré 4</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Description</td>
+            <td class="deg1">
+              Prestation encore éloignée du projet. Trajets et postures donnent peu de sécurité, la gestion de l’effort ne permet pas vraiment d’obtenir les effets visés.
+            </td>
+            <td class="deg2">
+              L’élève sait se placer. Respiration et rythme sont mis en place mais ne sont pas vraiment accordés avec le thème d’entraînement choisi.
+            </td>
+            <td class="deg3">
+              Séance globalement en lien avec le thème. Respiration et rythme sont adaptés. Les charges restent cohérentes mais pourraient être mieux ajustées. La majorité des exercices est réalisée de façon pertinente.
+            </td>
+            <td class="deg4">
+              Exercices dont le rythme et la recherche de déformation montrent une vraie maîtrise de l’entraînement : trajets et amplitudes efficaces et sécurisés. Organisation de la séance (récupération, intensité) qui renforce les effets recherchés, homogénéité sur l’ensemble des exercices.
+            </td>
+          </tr>
+          <tr>
+            <td>Points</td>
+            <td class="deg1 center">0 à 2 pts</td>
+            <td class="deg2 center">2,5 à 4 pts</td>
+            <td class="deg3 center">4,5 à 6 pts</td>
+            <td class="deg4 center">6,5 à 8 pts</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- AFL1 Élément 2 -->
+      <div class="section-title" style="margin-top:12px;">
+        AFL1 – Élément 2 : échauffement, étirements, alternance effort / récupération – /4 pts
+      </div>
+      <div class="scroll-table">
+        <table class="scale-table">
+          <thead>
+          <tr>
+            <th>Degré</th>
+            <th class="deg1">Degré 1</th>
+            <th class="deg2">Degré 2</th>
+            <th class="deg3">Degré 3</th>
+            <th class="deg4">Degré 4</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Description</td>
+            <td class="deg1">
+              Échauffement incomplet. Étirements et récupération sont en grande partie oubliés ou mal utilisés.
+            </td>
+            <td class="deg2">
+              Échauffement complet mais peu en lien avec la séance prévue. Étirements et récupérations sont irréguliers ou peu réfléchis.
+            </td>
+            <td class="deg3">
+              Échauffement cohérent avec la séance proposée. Étirements et récupération sont choisis de manière pertinente au regard du travail réalisé.
+            </td>
+            <td class="deg4">
+              Préparation complète, adaptée au mobile choisi. L’élève se prépare à un effort optimal en sécurité et sait organiser alternances effort / récupération pour renforcer les effets visés.
+            </td>
+          </tr>
+          <tr>
+            <td>Points</td>
+            <td class="deg1 center">0 à 1 pt</td>
+            <td class="deg2 center">1,25 à 2 pts</td>
+            <td class="deg3 center">2,25 à 3 pts</td>
+            <td class="deg4 center">3,25 à 4 pts</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- AFL2 -->
+      <div class="section-title" style="margin-top:12px;">
+        AFL2 – Carnet, projet, paramètres d’entraînement, bilans
+      </div>
+      <div class="scroll-table">
+        <table class="scale-table">
+          <thead>
+          <tr>
+            <th>Éléments évalués</th>
+            <th class="deg1">Degré 1</th>
+            <th class="deg2">Degré 2</th>
+            <th class="deg3">Degré 3</th>
+            <th class="deg4">Degré 4</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Utilisation du carnet, projet personnel, paramètres, bilans</td>
+            <td class="deg1">
+              Carnet rempli de façon très succincte. Projet personnel peu repérable. Paramètres d’entraînement souvent absents ou peu justifiés. Bilans stéréotypés, sans vraie projection vers la séance suivante.
+            </td>
+            <td class="deg2">
+              Carnet incomplet et peu utile pour réguler le travail. Séance pensée mais avec des incohérences (charges, étirements, répartition des groupes musculaires…). Bilans rédigés avec un vocabulaire approximatif et des erreurs dans la conception.
+            </td>
+            <td class="deg3">
+              Carnet rempli à chaque séance. Bilans complets. La majorité des paramètres (charges, pourcentages, séries, répétitions, récupération, rythme) est décrite et en lien avec le thème. Bilans tenant compte du ressenti et proposant des pistes de régulation, même s’il reste quelques approximations.
+            </td>
+            <td class="deg4">
+              Carnet très précis : tous les paramètres sont renseignés et cohérents avec le thème d’entraînement. Projet personnel affirmé, utilisation possible de techniques d’intensification. Bilans complets et réfléchis, régulations à bon escient et conception argumentée de la séance future.
+            </td>
+          </tr>
+          <tr>
+            <td>Exemples de points</td>
+            <td class="deg1">
+              Cas n°1 : 1,5 pt – Cas n°2 : 1 pt – Cas n°3 : 0,5 pt
+            </td>
+            <td class="deg2">
+              Cas n°1 : 3 pts – Cas n°2 : 2 pts – Cas n°3 : 1 pt
+            </td>
+            <td class="deg3">
+              Cas n°1 : 4,5 pts – Cas n°2 : 3 pts – Cas n°3 : 1,5 pt
+            </td>
+            <td class="deg4">
+              Cas n°1 : 6 pts – Cas n°2 : 4 pts – Cas n°3 : 2 pts
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- AFL3 -->
+      <div class="section-title" style="margin-top:12px;">
+        AFL3 – Coopérer pour faire progresser : coacher son partenaire
+      </div>
+      <div class="scroll-table">
+        <table class="scale-table">
+          <thead>
+          <tr>
+            <th>Coaching</th>
+            <th class="deg1">Degré 1</th>
+            <th class="deg2">Degré 2</th>
+            <th class="deg3">Degré 3</th>
+            <th class="deg4">Degré 4</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Description</td>
+            <td class="deg1">
+              Coaching très peu impliqué : pas de chronométrage fiable, peu ou pas de corrections. Postures parfois dangereuses non signalées.
+            </td>
+            <td class="deg2">
+              Coaching distant : l’accent est surtout mis sur le chrono, les corrections sont tardives ou partielles, certaines erreurs persistent.
+            </td>
+            <td class="deg3">
+              Coaching attentif : le partenaire surveille chrono, posture, respiration et rythme d’exécution, même s’il a parfois du mal à tout gérer simultanément.
+            </td>
+            <td class="deg4">
+              Coaching précis et bienveillant : conseils pertinents, encouragements, corrections rapides. Contribue réellement à la progression de son partenaire.
+            </td>
+          </tr>
+          <tr>
+            <td>Exemples de points</td>
+            <td class="deg1">
+              Cas n°1 : 1,5 pt – Cas n°2 : 1 pt – Cas n°3 : 0,5 pt
+            </td>
+            <td class="deg2">
+              Cas n°1 : 3 pts – Cas n°2 : 2 pts – Cas n°3 : 1 pt
+            </td>
+            <td class="deg3">
+              Cas n°1 : 4,5 pts – Cas n°2 : 3 pts – Cas n°3 : 1,5 pt
+            </td>
+            <td class="deg4">
+              Cas n°1 : 6 pts – Cas n°2 : 4 pts – Cas n°3 : 2 pts
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- AUTO-ÉVALUATION -->
+      <div class="self-eval-box">
+        <div class="section-title">Mon auto-évaluation (fin de séquence)</div>
+        <p class="muted" style="margin-bottom:6px;">
+          Choisis le degré qui correspond le mieux à ton niveau pour chaque critère, en t’appuyant sur le barème ci-dessus.
+        </p>
+
+        <div class="self-eval-row">
+          <div class="self-eval-label">AFL1 – Élément 1</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl1e1" value="1" data-self-afl="afl1e1"> 1</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl1e1" value="2" data-self-afl="afl1e1"> 2</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl1e1" value="3" data-self-afl="afl1e1"> 3</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl1e1" value="4" data-self-afl="afl1e1"> 4</div>
+        </div>
+
+        <div class="self-eval-row">
+          <div class="self-eval-label">AFL1 – Élément 2</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl1e2" value="1" data-self-afl="afl1e2"> 1</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl1e2" value="2" data-self-afl="afl1e2"> 2</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl1e2" value="3" data-self-afl="afl1e2"> 3</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl1e2" value="4" data-self-afl="afl1e2"> 4</div>
+        </div>
+
+        <div class="self-eval-row">
+          <div class="self-eval-label">AFL2</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl2" value="1" data-self-afl="afl2"> 1</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl2" value="2" data-self-afl="afl2"> 2</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl2" value="3" data-self-afl="afl2"> 3</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl2" value="4" data-self-afl="afl2"> 4</div>
+        </div>
+
+        <div class="self-eval-row">
+          <div class="self-eval-label">AFL3</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl3" value="1" data-self-afl="afl3"> 1</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl3" value="2" data-self-afl="afl3"> 2</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl3" value="3" data-self-afl="afl3"> 3</div>
+          <div class="self-eval-option"><input type="radio" name="self_afl3" value="4" data-self-afl="afl3"> 4</div>
+        </div>
+
+        <div style="margin-top:6px;">
+          <label for="selfEvalNote">Ma note (ex : 14/20 ou 16/24)</label>
+          <input type="text" id="selfEvalNote" placeholder="Ma note finale…">
+          <p id="selfEvalSummary" class="muted" style="margin-top:4px;">Ma note : …</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Onglet 4 : BON À SAVOIR (même structure que ta fiche) -->
+    <div id="tab-infos" class="tab-panel">
+      <div class="section-title">Bon à savoir</div>
+
+      <!-- 1. 2 mobliles possibles -->
+      <div class="scroll-table">
+        <table>
+          <thead>
+          <tr>
+            <th>2 Mobiles possibles</th>
+            <th>1 – Puissance</th>
+            <th>2 – Tonification</th>
+            <th>Liens utiles</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Intensité</td>
+            <td>
+              4 séries de 8 exercices enchaînés de 30’’  
+              (au moins 2 exercices de cardio).
+            </td>
+            <td>
+              3 séries de 10 exercices enchaînés de 30’’ à 45’’  
+              (au moins 3 exercices de cardio).
+            </td>
+            <td rowspan="3">
+              <ul class="muted" style="padding-left:16px;margin:0;">
+                <li>Programmes de musculation sans matériel.</li>
+                <li>Exemples d’exercices de musculation.</li>
+                <li>Programmes complets de musculation sans matériel.</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>Vitesse d’exécution</td>
+            <td>Rapide avec accélération (explosivité).</td>
+            <td>Soutenue.</td>
+          </tr>
+          <tr>
+            <td>Récupération</td>
+            <td>Active – 3’ entre les séries.</td>
+            <td>Active – 1’ entre les séries.</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 2. Tu seras jugé(e) sur -->
+      <div class="section-title" style="margin-top:10px;">Tu seras jugé(e) sur :</div>
+      <div class="scroll-table">
+        <table>
+          <thead>
+          <tr>
+            <th>La réalisation du programme – AFL1</th>
+            <th>Réguler son travail & conception du programme – AFL2</th>
+            <th>Ton rôle de coach – AFL3</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              <ul class="muted" style="padding-left:16px;margin:0;">
+                <li>Posture bien réalisée.</li>
+                <li>Respiration bien calée.</li>
+                <li>Rythme adapté.</li>
+                <li>Temps de récupération respectés.</li>
+                <li>Échauffement et étirements en fin de programme.</li>
+                <li>La récupération.</li>
+              </ul>
+            </td>
+            <td>
+              <ul class="muted" style="padding-left:16px;margin:0;">
+                <li>La tenue du carnet d’entraînement.</li>
+                <li>Les bilans de séance.</li>
+                <li>La cohérence des exercices / mobile / muscles sollicités.</li>
+              </ul>
+            </td>
+            <td>
+              <ul class="muted" style="padding-left:16px;margin:0;">
+                <li>Le coaching sur les postures de ton binôme.</li>
+                <li>Le chronométrage.</li>
+              </ul>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 3. Agir en sécurité -->
+      <div class="section-title" style="margin-top:10px;">Agir en sécurité</div>
+      <ul class="muted" style="padding-left:18px;">
+        <li>Respecter la posture : corps gainé, tonicité générale, alignement des segments, regard placé.</li>
+        <li>Expirer en fin d’effort.</li>
+        <li>Pas de blocage articulaire.</li>
+        <li>Pas de cambrure.</li>
+        <li>Charge adaptée.</li>
+        <li>S’hydrater pendant les phases de récupération.</li>
+      </ul>
+
+      <!-- 4. Dossier d'évaluation -->
+      <div class="section-title" style="margin-top:8px;">Ton dossier à présenter pour l’évaluation devra comprendre :</div>
+      <ul class="muted" style="padding-left:18px;">
+        <li>Ton projet : le choix du mobile justifié.</li>
+        <li>Ton échauffement.</li>
+        <li>
+          Ton programme : équilibré et/ou adapté (2 ou 3 cardio, bas du corps, haut du corps, abdos),  
+          les muscles sollicités, 8 ou 10 exercices, nombre de séries, temps de récupération.
+        </li>
+        <li>Les étirements prévus.</li>
+        <li>Durée maxi 40 minutes.</li>
+        <li>Ton bilan de cycle et la projection sur un cycle ultérieur.</li>
+        <li>Ton carnet d’entraînement complété ; les documents partagés remplis.</li>
+      </ul>
+
+      <!-- 5. Échelle de ressenti -->
+      <div class="section-title" style="margin-top:8px;">Échelle de ressenti</div>
+      <div class="scroll-table">
+        <table class="scale-table">
+          <thead>
+          <tr>
+            <th>Échelle de ressenti</th>
+            <th>Perception de l’effort</th>
+            <th>Sensations musculaires</th>
+            <th>Sensations respiratoires</th>
+            <th>Sensation de chaleur</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="res1">
+            <td><strong>Niveau 1</strong></td>
+            <td>Un peu difficile</td>
+            <td>Faibles contractions</td>
+            <td>Respiration rapide</td>
+            <td>Commence à transpirer</td>
+          </tr>
+          <tr class="res2">
+            <td><strong>Niveau 2</strong></td>
+            <td>Difficile</td>
+            <td>Fatigue musculaire</td>
+            <td>Difficulté à reprendre son souffle</td>
+            <td>Très chaud, transpiration plus importante</td>
+          </tr>
+          <tr class="res3">
+            <td><strong>Niveau 3</strong></td>
+            <td>Très difficile</td>
+            <td>Muscles restent durs</td>
+            <td>Très essoufflé</td>
+            <td>Rougeurs, transpiration importante</td>
+          </tr>
+          <tr class="res4">
+            <td><strong>Niveau 4</strong></td>
+            <td>Trop difficile</td>
+            <td>Tétanie</td>
+            <td>À bout de souffle</td>
+            <td>Transpiration abondante</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+        <!-- Onglet 5 : BIBLIOTHÈQUE D'EXERCICES -->
+    <div id="tab-exercises" class="tab-panel">
+      <div class="section-title">Bibliothèque d'exercices</div>
+      <p class="muted">
+        Filtre les exercices par catégorie et par muscles. Clique sur un exercice pour afficher la fiche :
+        critères de réalisation, consignes de sécurité, variantes…
+      </p>
+
+      <div class="card exercise-filters" style="padding:8px 10px;">
+        <div class="row">
+          <div class="col">
+            <label for="exerciseCategoryFilter">Catégorie</label>
+            <select id="exerciseCategoryFilter">
+              <option value="ALL">Toutes</option>
+              <option value="Haut du corps">Haut du corps</option>
+              <option value="Bas du corps">Bas du corps</option>
+              <option value="Abdominaux">Abdominaux</option>
+              <option value="Cardio">Cardio</option>
+            </select>
+          </div>
+          <div class="col">
+            <label for="exerciseSearch">Recherche (nom / muscles)</label>
+            <input id="exerciseSearch" type="text"
+                   placeholder="Ex : pectoraux, squat, triceps…">
+          </div>
+        </div>
+      </div>
+
+      <div id="exerciseList" class="exercise-list"></div>
+
+      <!-- Modale fiche exercice -->
+      <div id="exerciseModal" class="exercise-modal" style="display:none;">
+        <div class="exercise-modal-content">
+          <span id="closeExerciseModal" class="close-ex-modal">&times;</span>
+          <h3 id="exerciseTitle"></h3>
+          <p class="muted" style="margin-top:0;">
+            <strong>Catégorie :</strong> <span id="exerciseCategory"></span> –
+            <strong>Muscles sollicités :</strong> <span id="exerciseMuscles"></span>
+          </p>
+
+          <div id="exerciseEquipmentLine" class="muted" style="margin-bottom:6px;"></div>
+
+          <h4>Consignes de sécurité</h4>
+          <ul id="exerciseSafety"></ul>
+
+          <h4>Critères de réalisation</h4>
+          <ul id="exerciseCriteria"></ul>
+
+          <h4>Variantes / progressions</h4>
+          <ul id="exerciseVariations"></ul>
+
+          <a id="exerciseVideoLink" class="exercise-video-link" href="#" target="_blank" style="display:none;">
+            Voir la vidéo de démonstration
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const STORAGE_KEY = "muscu_carnet_app_v6"; // ou ton nom actuel
+const DELETE_CODE = "EPS2025"; // <<< code enseignant à choisir
+// URL de la base temps réel Firebase (REST API)
+const FIREBASE_URL = "https://carnet-d-entrainement-muscu-default-rtdb.europe-west1.firebasedatabase.app/carnetData.json";
+
+  const LESSON_COUNT = 8;
+  const EXO_LINES = 10;
+  const STATE_DESCRIPTIONS = {
+  1: "Aucune énergie, envie de se reposer immédiatement.",
+  2: "Très fatigué, difficulté à se concentrer ou à bouger, tout semble un effort.",
+  3: "Fatigué, sensation de lourdeur, manque d'énergie notable.",
+  4: "Plutôt fatigué, léger manque de dynamisme, mais encore capable de participer.",
+  5: "Normal, ni particulièrement fatigué, ni en pleine forme, état neutre.",
+  6: "Assez en forme, ressent de l'énergie, mais pas au maximum.",
+  7: "En forme, dynamique et motivé, prêt pour une activité normale.",
+  8: "Très en forme, beaucoup d’énergie et d’enthousiasme, prêt à se dépasser.",
+  9: "En excellente forme, grande vitalité, aucune fatigue ressentie.",
+  10: "Au top ! État optimal, énergie débordante, prêt pour un effort intense."
+};
+
+// ------------------- BIBLIOTHÈQUE D'EXERCICES -------------------
+
+const EXERCISES = [
+  // ========== HAUT DU CORPS / TRONC / ÉPAULES ==========
+
+  {
+    name: "Pompes classiques",
+    category: "Haut du corps",
+    muscles: "Pectoraux, triceps, deltoïdes, gainage",
+    musclesTags: ["pectoraux", "triceps", "épaules", "deltoïdes", "bras", "gainage"],
+    equipment: "Poids de corps",
+    safety: [
+      "Garder le corps aligné de la tête aux pieds.",
+      "Ne pas cambrer le bas du dos.",
+      "Mains sous les épaules ou légèrement plus larges."
+    ],
+    criteria: [
+      "Descente contrôlée, poitrine proche du sol.",
+      "Coudes proches du corps ou légèrement ouverts, pas à 90°.",
+      "Bras tendus en haut sans verrouiller violemment les coudes."
+    ],
+    variations: [
+      "Plus facile : pompes sur les genoux ou mains sur un banc.",
+      "Plus difficile : pompes avec pieds surélevés ou tempo lent."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Pompes triceps (mains serrées) / pompes serrées",
+    category: "Haut du corps",
+    muscles: "Triceps, pectoraux internes, gainage",
+    musclesTags: ["triceps", "bras", "pectoraux"],
+    equipment: "Poids de corps",
+    safety: [
+      "Mains serrées sous la poitrine (forme de losange ou mains parallèles).",
+      "Coudes proches du buste.",
+      "Corps gainé pendant tout le mouvement."
+    ],
+    criteria: [
+      "Descendre jusqu’à environ 90° de flexion de coude.",
+      "Pousser en gardant le bassin aligné (ne pas s’affaisser).",
+      "Souffler en poussant, inspirer en redescendant."
+    ],
+    variations: [
+      "Plus facile : sur les genoux.",
+      "Plus difficile : tempo lent ou ajout d’un lest (sac)."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Pompes larges",
+    category: "Haut du corps",
+    muscles: "Pectoraux, deltoïdes, triceps, gainage",
+    musclesTags: ["pectoraux", "triceps", "épaules", "gainage"],
+    equipment: "Poids de corps",
+    safety: [
+      "Mains plus larges que les épaules.",
+      "Ne pas laisser les coudes partir à 90° sur les côtés.",
+      "Corps aligné, abdos engagés."
+    ],
+    criteria: [
+      "Descendre poitrine entre les mains.",
+      "Remonter en poussant fort dans les paumes.",
+      "Rythme régulier et contrôlé."
+    ],
+    variations: [
+      "Plus facile : sur les genoux.",
+      "Plus difficile : tempo lent, maintien en bas quelques secondes."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Pompes en T",
+    category: "Haut du corps",
+    muscles: "Pectoraux, épaules, triceps, obliques, gainage",
+    musclesTags: ["pectoraux", "épaules", "triceps", "obliques", "gainage"],
+    equipment: "Poids de corps",
+    safety: [
+      "Commencer en position de pompe classique.",
+      "Limiter l’amplitude de rotation si douleur d’épaule.",
+      "Regard suivant la main qui s’ouvre."
+    ],
+    criteria: [
+      "Faire une pompe puis ouvrir en planche latérale (bras vers le plafond).",
+      "Hanches alignées, pas de bassin qui tombe.",
+      "Alterner côté droit / gauche."
+    ],
+    variations: [
+      "Plus facile : sur les genoux.",
+      "Plus difficile : tempo lent ou charge légère dans la main qui s’ouvre."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Pompes piquées",
+    category: "Haut du corps",
+    muscles: "Épaules (deltoïdes), triceps, haut du dos, gainage",
+    musclesTags: ["épaules", "deltoïdes", "triceps", "haut du dos"],
+    equipment: "Poids de corps",
+    safety: [
+      "Former un V inversé : bassin vers le plafond.",
+      "Regard vers les pieds ou entre les mains.",
+      "Descendre en contrôle, ne pas cogner la tête au sol."
+    ],
+    criteria: [
+      "Fléchir les coudes en amenant la tête vers le sol entre les mains.",
+      "Pousser fort pour revenir en V inversé.",
+      "Respiration régulière, abdos engagés."
+    ],
+    variations: [
+      "Plus facile : pieds plus proches des mains (moins de charge).",
+      "Plus difficile : pieds surélevés."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Rowing élastique debout",
+    category: "Haut du corps",
+    muscles: "Grand dorsal, biceps, muscles entre les omoplates",
+    musclesTags: ["dos", "grand dorsal", "biceps", "omoplates"],
+    equipment: "Élastique",
+    safety: [
+      "Tronc légèrement penché en avant, dos droit.",
+      "Ne pas tirer avec le bas du dos.",
+      "Épaules basses (ne pas les hausser)."
+    ],
+    criteria: [
+      "Amener les coudes vers l’arrière en serrant les omoplates.",
+      "Revenir en contrôlant la tension de l’élastique.",
+      "Inspirer en revenant, souffler en tirant."
+    ],
+    variations: [
+      "Plus facile : élastique moins tendu, prise plus proche du centre.",
+      "Plus difficile : reculer pour tendre davantage l’élastique."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Curl biceps avec haltères ou élastique",
+    category: "Haut du corps",
+    muscles: "Biceps, avant-bras",
+    musclesTags: ["biceps", "avant-bras", "bras"],
+    equipment: "Haltères ou élastique",
+    safety: [
+      "Coudes proches du corps, fixés.",
+      "Dos droit, ne pas se balancer.",
+      "Poignets dans l’axe des avant-bras."
+    ],
+    criteria: [
+      "Monter les avant-bras sans avancer les coudes.",
+      "Contrôler la descente.",
+      "Amplitude adaptée à la mobilité de chacun."
+    ],
+    variations: [
+      "Prise marteau (paumes face à face) pour cibler davantage les avant-bras.",
+      "Unilatéral (un bras à la fois) pour travailler la stabilité."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Rétroaction avec élastique",
+    category: "Haut du corps",
+    muscles: "Fixateurs d’omoplates, deltoïdes postérieurs",
+    musclesTags: ["épaules", "omoplates", "haut du dos"],
+    equipment: "Élastique",
+    safety: [
+      "Debout, jambes semi-fléchies, bassin rétroversé.",
+      "Abdominaux engagés, dos droit.",
+      "Ne pas hausser les épaules."
+    ],
+    criteria: [
+      "Bras le long du corps, tirer les mains vers l’arrière, paumes vers l’arrière.",
+      "Serrer les omoplates en fin de mouvement.",
+      "Revenir lentement à la position de départ."
+    ],
+    variations: [
+      "Plus facile : réduire la tension de l’élastique.",
+      "Plus difficile : tenir la contraction 2–3 s en fin de mouvement."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Élévations latérales avec élastique",
+    category: "Haut du corps",
+    muscles: "Deltoïdes (épaules)",
+    musclesTags: ["épaules", "deltoïdes"],
+    equipment: "Élastique",
+    safety: [
+      "Épaules basses, nuque relâchée.",
+      "Légère flexion des coudes.",
+      "Ne pas forcer au-delà du niveau des épaules si douleur."
+    ],
+    criteria: [
+      "Lever les bras sur les côtés jusqu’à l’horizontale.",
+      "Redescendre lentement sans relâcher complètement la tension.",
+      "Tronc stable, pas d’élan avec le dos."
+    ],
+    variations: [
+      "Plus facile : élastique plus souple ou prise plus proche du centre.",
+      "Plus difficile : maintien isométrique quelques secondes en haut."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Élévations latérales avec haltères",
+    category: "Haut du corps",
+    muscles: "Deltoïdes (épaules)",
+    musclesTags: ["épaules", "deltoïdes"],
+    equipment: "Haltères",
+    safety: [
+      "Épaules basses (ne pas les hausser).",
+      "Légère flexion des coudes.",
+      "Charge adaptée pour éviter de se balancer."
+    ],
+    criteria: [
+      "Lever les bras de chaque côté jusqu’à l’horizontale.",
+      "Redescendre lentement.",
+      "Tronc stable, gainage léger."
+    ],
+    variations: [
+      "Plus facile : charge plus légère, amplitude réduite.",
+      "Plus difficile : en position assise ou avec pause en haut."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Reverse snow angel",
+    category: "Haut du corps",
+    muscles: "Haut du dos, épaules, muscles entre les omoplates",
+    musclesTags: ["haut du dos", "épaules", "omoplates"],
+    equipment: "Poids de corps",
+    safety: [
+      "Allongé sur le ventre, front posé ou regard vers le sol.",
+      "Ne pas monter trop haut les épaules si douleur.",
+      "Bas du dos long, abdos engagés."
+    ],
+    criteria: [
+      "Bras tendus devant puis ouvrir sur les côtés comme un \"ange dans la neige\".",
+      "Serrer légèrement les omoplates en fin de mouvement.",
+      "Mouvement lent et contrôlé."
+    ],
+    variations: [
+      "Plus facile : amplitude réduite.",
+      "Plus difficile : tenir 2 secondes bras ouverts avant de revenir."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Dips triceps sur chaise",
+    category: "Haut du corps",
+    muscles: "Triceps, épaules, pectoraux",
+    musclesTags: ["triceps", "épaules", "pectoraux"],
+    equipment: "Chaise ou banc stable",
+    safety: [
+      "Chaise contre un mur, stable.",
+      "Épaules basses, regarder devant.",
+      "Ne pas descendre au-delà de l’angle confortable des épaules."
+    ],
+    criteria: [
+      "Mains sur le bord de la chaise, doigts vers l’avant.",
+      "Descendre en fléchissant les coudes puis pousser pour remonter.",
+      "Dos proche de la chaise (ne pas avancer le bassin)."
+    ],
+    variations: [
+      "Plus facile : genoux fléchis, pieds proches.",
+      "Plus difficile : jambes tendues ou pied surélevé."
+    ],
+    videoUrl: ""
+  },
+
+  // ========== ABDOMINAUX / GAINAGE ==========
+
+  {
+    name: "La planche (gainage ventral)",
+    category: "Abdominaux",
+    muscles: "Abdominaux, gainage global, lombaires",
+    musclesTags: ["abdos", "gainage", "lombaires"],
+    equipment: "Poids de corps",
+    safety: [
+      "Coudes sous les épaules.",
+      "Corps aligné, ne pas laisser tomber le bassin.",
+      "Regard vers le sol."
+    ],
+    criteria: [
+      "Tenir la position sans bouger, respiration calme.",
+      "Même posture du début à la fin.",
+      "Arrêter avant que la technique se dégrade."
+    ],
+    variations: [
+      "Plus facile : sur les genoux.",
+      "Plus difficile : lever une jambe ou un bras."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Le chien-oiseau (bird dog)",
+    category: "Abdominaux",
+    muscles: "Gainage du tronc, lombaires, fessiers, épaules",
+    musclesTags: ["gainage", "lombaires", "fessiers", "épaules"],
+    equipment: "Poids de corps",
+    safety: [
+      "Dos plat, hanches au-dessus des genoux.",
+      "Épaules au-dessus des poignets.",
+      "Ne pas creuser exagérément le bas du dos."
+    ],
+    criteria: [
+      "Allonger un bras et la jambe opposée.",
+      "Garder le bassin stable (ne pas tourner).",
+      "Revenir puis alterner côté droit / gauche."
+    ],
+    variations: [
+      "Plus facile : ne lever que les jambes ou que les bras.",
+      "Plus difficile : tenir 3–4 secondes en équilibre."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Battements de jambes / ciseaux",
+    category: "Abdominaux",
+    muscles: "Grand droit, fléchisseurs de hanches, quadriceps",
+    musclesTags: ["abdos", "grand droit", "fléchisseurs de hanche", "quadriceps"],
+    equipment: "Poids de corps",
+    safety: [
+      "Bas du dos plaqué au sol.",
+      "Si douleur lombaire : lever davantage les jambes ou les fléchir.",
+      "Ne pas tirer sur la nuque."
+    ],
+    criteria: [
+      "Nombril aspiré, omoplates légèrement décollées.",
+      "Battement alterné des jambes en contrôlant le mouvement.",
+      "Respiration régulière."
+    ],
+    variations: [
+      "Version lente pour le contrôle.",
+      "Version plus dynamique dans un bloc cardio."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Le nageur",
+    category: "Abdominaux",
+    muscles: "Transverse, bas du dos, fessiers, ischios",
+    musclesTags: ["bas du dos", "fessiers", "ischios", "transverse"],
+    equipment: "Poids de corps",
+    safety: [
+      "Allongé sur le ventre, regard vers le sol.",
+      "Abdos engagés pour protéger le bas du dos.",
+      "Ne pas forcer si douleur lombaire."
+    ],
+    criteria: [
+      "Battements simultanés des bras et des jambes.",
+      "Mouvement petit et contrôlé, pas de grands gestes brusques.",
+      "Respiration fluide."
+    ],
+    variations: [
+      "Plus facile : lever seulement les bras ou seulement les jambes.",
+      "Plus difficile : tenir la position en isométrie."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Superman",
+    category: "Abdominaux",
+    muscles: "Bas du dos, fessiers, ischios",
+    musclesTags: ["bas du dos", "fessiers", "ischios"],
+    equipment: "Poids de corps",
+    safety: [
+      "Allongé sur le ventre, bras tendus devant.",
+      "Ne pas chercher une extension excessive du dos.",
+      "Engager les abdos pour stabiliser."
+    ],
+    criteria: [
+      "Lever bras et jambes en même temps.",
+      "Tenir brièvement puis redescendre contrôlé.",
+      "Respiration régulière."
+    ],
+    variations: [
+      "Plus facile : lever seulement le haut ou le bas du corps.",
+      "Plus difficile : maintenir plusieurs secondes en haut."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Mountain climbers",
+    category: "Abdominaux",
+    muscles: "Sangle abdominale, épaules, cardio",
+    musclesTags: ["abdos", "gainage", "cardio"],
+    equipment: "Poids de corps",
+    safety: [
+      "Position de planche bras tendus.",
+      "Ne pas laisser le bassin monter ou s’affaisser.",
+      "Mains sous les épaules."
+    ],
+    criteria: [
+      "Ramener un genou vers la poitrine puis alterner rapidement.",
+      "Garder les pieds légers au sol.",
+      "Rythme adapté au niveau (du lent au très dynamique)."
+    ],
+    variations: [
+      "Plus facile : cadence lente.",
+      "Plus difficile : en version sprint (30\" intense / 30\" récup)."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Promenade du gainage",
+    category: "Abdominaux",
+    muscles: "Abdos, épaules, poignets, gainage global",
+    musclesTags: ["gainage", "abdos", "épaules"],
+    equipment: "Poids de corps",
+    safety: [
+      "Partir en planche bras tendus.",
+      "Pas de creux dans le bas du dos.",
+      "Bien répartir le poids entre mains et pieds."
+    ],
+    criteria: [
+      "Marcher vers l’avant ou sur les côtés en gardant le tronc stable.",
+      "Petits pas pour limiter les à-coups.",
+      "Revenir progressivement à la position de départ."
+    ],
+    variations: [
+      "Plus facile : distance de marche réduite.",
+      "Plus difficile : marcher autour d’un repère (cône, tapis…)."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Planche creuse",
+    category: "Abdominaux",
+    muscles: "Grand droit, transverse, fléchisseurs de hanches",
+    musclesTags: ["abdos", "grand droit", "transverse"],
+    equipment: "Poids de corps",
+    safety: [
+      "Bas du dos collé au sol.",
+      "Si douleur lombaire : réduire l’amplitude des jambes.",
+      "Ne pas bloquer la respiration."
+    ],
+    criteria: [
+      "Bras tendus derrière la tête, jambes tendues ou fléchies.",
+      "Former une \"banane\" en décollant légèrement épaules et jambes.",
+      "Tenir la position en gardant le ventre rentré."
+    ],
+    variations: [
+      "Plus facile : une seule jambe tendue ou genoux fléchis.",
+      "Plus difficile : petits battements de bras et de jambes."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Insecte mort (dead bug)",
+    category: "Abdominaux",
+    muscles: "Transverse, grand droit, fléchisseurs de hanches",
+    musclesTags: ["abdos", "transverse", "grand droit"],
+    equipment: "Poids de corps",
+    safety: [
+      "Bas du dos plaqué au sol.",
+      "Ne pas aller trop bas avec la jambe si le dos se décolle.",
+      "Respiration régulière."
+    ],
+    criteria: [
+      "Bras vers le plafond, hanches et genoux à 90°.",
+      "Descendre bras et jambe opposés sans décoller le bas du dos.",
+      "Revenir et alterner les côtés."
+    ],
+    variations: [
+      "Plus facile : ne bouger que les jambes.",
+      "Plus difficile : ralentir fortement la descente."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Levés de jambe latéraux",
+    category: "Abdominaux",
+    muscles: "Obliques, moyens fessiers, gainage latéral",
+    musclesTags: ["obliques", "gainage", "fessiers"],
+    equipment: "Poids de corps",
+    safety: [
+      "Allongé sur le côté, tête alignée avec la colonne.",
+      "Ne pas tirer sur le cou.",
+      "Bassin stable, ne pas rouler vers l’avant ou l’arrière."
+    ],
+    criteria: [
+      "Lever la jambe du dessus vers le plafond, contrôle de la descente.",
+      "Pied légèrement tourné vers l’intérieur pour cibler le moyen fessier.",
+      "Respiration fluide."
+    ],
+    variations: [
+      "Plus facile : amplitude réduite.",
+      "Plus difficile : maintenir quelques secondes en haut."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Planche latérale",
+    category: "Abdominaux",
+    muscles: "Obliques, gainage latéral",
+    musclesTags: ["abdos", "obliques", "gainage"],
+    equipment: "Poids de corps",
+    safety: [
+      "Coude sous l’épaule.",
+      "Bassin aligné avec le reste du corps.",
+      "Ne pas laisser tomber la hanche."
+    ],
+    criteria: [
+      "Corps aligné, jambes tendues ou fléchies.",
+      "Maintenir la position sans tremblements excessifs.",
+      "Respiration maîtrisée."
+    ],
+    variations: [
+      "Version sur les genoux.",
+      "Plus difficile : lever la jambe du dessus."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Crunch",
+    category: "Abdominaux",
+    muscles: "Grand droit (haut des abdos)",
+    musclesTags: ["abdos", "grand droit"],
+    equipment: "Poids de corps",
+    safety: [
+      "Bas du dos en contact avec le sol.",
+      "Ne pas tirer sur la nuque.",
+      "Montée courte, sans s’asseoir complètement."
+    ],
+    criteria: [
+      "Enrouler le buste en expirant.",
+      "Redescendre lentement en inspirant.",
+      "Regard vers le plafond."
+    ],
+    variations: [
+      "Avec les pieds surélevés.",
+      "Avec charge légère tenue sur la poitrine."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Russian twist",
+    category: "Abdominaux",
+    muscles: "Obliques, grand droit",
+    musclesTags: ["obliques", "abdos"],
+    equipment: "Poids de corps ou charge légère",
+    safety: [
+      "Dos droit, buste légèrement incliné vers l’arrière.",
+      "Ne pas arrondir exagérément le bas du dos.",
+      "Regard vers l’avant."
+    ],
+    criteria: [
+      "Tourner le buste de droite à gauche en contrôlant.",
+      "Les mains suivent le mouvement (avec ou sans charge).",
+      "Pieds au sol ou légèrement décollés selon le niveau."
+    ],
+    variations: [
+      "Plus facile : pieds au sol.",
+      "Plus difficile : charge dans les mains et pieds décollés."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Chandelle",
+    category: "Abdominaux",
+    muscles: "Abdos bas, fléchisseurs de hanches",
+    musclesTags: ["abdos", "grand droit"],
+    equipment: "Poids de corps",
+    safety: [
+      "Bras le long du corps pour se stabiliser.",
+      "Ne pas retomber sur le dos en redescendant.",
+      "Contrôler la montée, ne pas donner de coups de bassin violents."
+    ],
+    criteria: [
+      "Lever les jambes à la verticale puis pousser le bassin vers le plafond.",
+      "Revenir en contrôlant la descente vertèbre par vertèbre.",
+      "Respiration maîtrisée."
+    ],
+    variations: [
+      "Plus facile : lever uniquement les jambes sans décoller le bassin.",
+      "Plus difficile : enchaîner plusieurs chandelles sans reposer complètement."
+    ],
+    videoUrl: ""
+  },
+
+  // ========== BAS DU CORPS ==========
+
+  {
+    name: "Squats",
+    category: "Bas du corps",
+    muscles: "Quadriceps, fessiers, ischios-jambiers, gainage",
+    musclesTags: ["quadriceps", "fessiers", "jambes", "ischios"],
+    equipment: "Poids de corps ou haltères",
+    safety: [
+      "Genoux alignés avec les pointes de pieds.",
+      "Dos droit, regard vers l’avant.",
+      "Talons au sol pendant tout le mouvement."
+    ],
+    criteria: [
+      "Hanches qui reculent comme pour s’asseoir.",
+      "Cuisses au moins parallèles au sol si possible.",
+      "Pousser dans les talons pour remonter."
+    ],
+    variations: [
+      "Plus facile : squat partiel (amplitude réduite).",
+      "Plus difficile : squat sauté ou avec haltères."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Fentes avant / arrière",
+    category: "Bas du corps",
+    muscles: "Quadriceps, fessiers, ischios-jambiers",
+    musclesTags: ["fessiers", "quadriceps", "ischios", "jambes"],
+    equipment: "Poids de corps ou haltères",
+    safety: [
+      "Genou avant aligné, ne pas rentrer vers l’intérieur.",
+      "Tronc droit, regarder devant.",
+      "Ne pas cogner le genou arrière au sol."
+    ],
+    criteria: [
+      "Faire un grand pas vers l’avant ou vers l’arrière, descendre à 90°/90°.",
+      "Pousser fort sur la jambe avant pour revenir.",
+      "Alternance jambe droite / jambe gauche."
+    ],
+    variations: [
+      "Plus facile : fentes statiques.",
+      "Plus difficile : fentes sautées."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Fentes croisées",
+    category: "Bas du corps",
+    muscles: "Fessiers, quadriceps, adducteurs",
+    musclesTags: ["fessiers", "quadriceps", "adducteurs"],
+    equipment: "Poids de corps",
+    safety: [
+      "Garder le buste droit.",
+      "Genou avant aligné sur la pointe de pied.",
+      "Descente contrôlée pour protéger les genoux."
+    ],
+    criteria: [
+      "Croiser une jambe derrière l’autre en diagonale.",
+      "Descendre jusqu’à sentir le travail dans les fessiers.",
+      "Revenir en poussant dans la jambe avant."
+    ],
+    variations: [
+      "Plus facile : amplitude réduite.",
+      "Plus difficile : ajouter des haltères."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "La chaise (wall sit)",
+    category: "Bas du corps",
+    muscles: "Quadriceps, fessiers, gainage",
+    musclesTags: ["quadriceps", "fessiers", "gainage"],
+    equipment: "Mur",
+    safety: [
+      "Dos plaqué contre le mur.",
+      "Genoux à 90° au-dessus des chevilles.",
+      "Ne pas rester si douleur aux genoux."
+    ],
+    criteria: [
+      "Tenir la position sans bouger.",
+      "Répartition du poids sur toute la plante des pieds.",
+      "Respiration calme."
+    ],
+    variations: [
+      "Plus facile : angle de genou > 90° (plus haut).",
+      "Plus difficile : tenir un poids, lever une jambe."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Leg curl au sol",
+    category: "Bas du corps",
+    muscles: "Ischios-jambiers, fessiers",
+    musclesTags: ["ischios", "fessiers"],
+    equipment: "Poids de corps (ou serviette / rouleau sous les pieds)",
+    safety: [
+      "Allongé sur le dos, pieds sur support glissant ou surélevé.",
+      "Ne pas cambrer exagérément le bas du dos.",
+      "Abdos engagés."
+    ],
+    criteria: [
+      "Monter le bassin puis ramener les talons vers les fessiers.",
+      "Revenir en contrôlant l’extension.",
+      "Respiration fluide."
+    ],
+    variations: [
+      "Plus facile : amplitude réduite.",
+      "Plus difficile : en unilatéral (une jambe)."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Step-up sur banc ou marche",
+    category: "Bas du corps",
+    muscles: "Quadriceps, fessiers, mollets",
+    musclesTags: ["quadriceps", "fessiers", "mollets"],
+    equipment: "Banc, caisse ou marche stable",
+    safety: [
+      "Support stable et non glissant.",
+      "Genou dans l’axe du pied.",
+      "Monter complètement sans se pencher trop en avant."
+    ],
+    criteria: [
+      "Monter sur le support en poussant dans le talon de la jambe d’appui.",
+      "Redescendre en contrôlant.",
+      "Alterner jambe droite / gauche."
+    ],
+    variations: [
+      "Plus facile : support plus bas.",
+      "Plus difficile : avec haltères ou montée explosive."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Donkey kick",
+    category: "Bas du corps",
+    muscles: "Fessiers, ischios, gainage",
+    musclesTags: ["fessiers", "ischios", "gainage"],
+    equipment: "Poids de corps",
+    safety: [
+      "Position quadrupédie (4 appuis), dos plat.",
+      "Ne pas creuser le bas du dos.",
+      "Regard vers le sol."
+    ],
+    criteria: [
+      "Pousser le talon vers le plafond en gardant le genou fléchi.",
+      "Revenir sans toucher le sol avec le genou si possible.",
+      "Faire toutes les répétitions d’un côté puis de l’autre."
+    ],
+    variations: [
+      "Plus difficile : élastique autour des cuisses.",
+      "Plus facile : amplitude réduite."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Fire hydrant",
+    category: "Bas du corps",
+    muscles: "Fessiers moyens, abducteurs, gainage",
+    musclesTags: ["fessiers", "abducteurs", "gainage"],
+    equipment: "Poids de corps",
+    safety: [
+      "Dos plat, abdos engagés.",
+      "Ne pas tourner tout le bassin.",
+      "Mouvement contrôlé, sans à-coup."
+    ],
+    criteria: [
+      "Abduction de la hanche : lever le genou sur le côté.",
+      "Revenir sans reposer complètement.",
+      "Répéter puis changer de côté."
+    ],
+    variations: [
+      "Plus difficile : élastique au-dessus des genoux.",
+      "Plus facile : amplitude réduite."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Pont fessier au sol",
+    category: "Bas du corps",
+    muscles: "Fessiers, ischios, lombaires",
+    musclesTags: ["fessiers", "ischios", "lombaires"],
+    equipment: "Poids de corps ou charge sur le bassin",
+    safety: [
+      "Pieds à plat, largeur bassin.",
+      "Ne pas hypercambrer le bas du dos en haut.",
+      "Regard vers le plafond."
+    ],
+    criteria: [
+      "Monter le bassin jusqu’à aligner cuisses / bassin / tronc.",
+      "Contracter fortement les fessiers en haut.",
+      "Redescendre lentement sans reposer complètement."
+    ],
+    variations: [
+      "Unilatéral (une jambe en l’air).",
+      "Avec élastique autour des genoux pour plus de travail latéral."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Extension des mollets",
+    category: "Bas du corps",
+    muscles: "Mollets (triceps sural)",
+    musclesTags: ["mollets", "jambes"],
+    equipment: "Poids de corps (ou marche)",
+    safety: [
+      "Se tenir à un support si besoin d’équilibre.",
+      "Ne pas rebondir violemment.",
+      "Amorti souple en redescendant."
+    ],
+    criteria: [
+      "Monter sur la pointe des pieds.",
+      "Marquer une petite pause en haut.",
+      "Redescendre lentement jusqu’aux talons."
+    ],
+    variations: [
+      "Plus difficile : sur une jambe.",
+      "Plus difficile encore : sur une marche pour plus d’amplitude."
+    ],
+    videoUrl: ""
+  },
+
+  // ========== CARDIO ==========
+
+  {
+    name: "Montées de genoux sur place",
+    category: "Cardio",
+    muscles: "Quadriceps, fléchisseurs de hanche, cardio",
+    musclesTags: ["cardio", "quadriceps", "course"],
+    equipment: "Poids de corps",
+    safety: [
+      "Atterrissage souple sur l’avant du pied.",
+      "Regard droit devant.",
+      "Ne pas se pencher trop en arrière."
+    ],
+    criteria: [
+      "Genoux montés à peu près à hauteur de hanche.",
+      "Bras actifs (comme en course).",
+      "Rythme régulier adapté au niveau."
+    ],
+    variations: [
+      "Version lente en échauffement.",
+      "Version très dynamique en intervalle (30\" très intense / 30\" récup)."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Talons-fesses sur place",
+    category: "Cardio",
+    muscles: "Ischios-jambiers, fessiers, cardio",
+    musclesTags: ["cardio", "ischios", "fessiers"],
+    equipment: "Poids de corps",
+    safety: [
+      "Rester léger sur les appuis.",
+      "Ne pas exagérer le mouvement du buste.",
+      "Regard vers l’avant."
+    ],
+    criteria: [
+      "Talons qui viennent frôler les fesses.",
+      "Cadence régulière.",
+      "Bras en mouvement pour accompagner."
+    ],
+    variations: [
+      "Peut être intégré en échauffement.",
+      "En alternance avec montées de genoux."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Jumping jacks",
+    category: "Cardio",
+    muscles: "Cardio global, adducteurs, abducteurs, épaules",
+    musclesTags: ["cardio", "adducteurs", "abducteurs", "épaules"],
+    equipment: "Poids de corps",
+    safety: [
+      "Amortir les réceptions.",
+      "Ne pas laisser les genoux rentrer vers l’intérieur.",
+      "Adapter la vitesse au niveau de chacun."
+    ],
+    criteria: [
+      "Ouverture/fermeture des jambes coordonnée avec les bras.",
+      "Posture droite, regard devant.",
+      "Rythme régulier sur toute la durée."
+    ],
+    variations: [
+      "Version sans saut (pas latéraux) pour les élèves fragiles ou en reprise.",
+      "Version en tempo rapide pour travail cardio intense."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Burpees",
+    category: "Cardio",
+    muscles: "Cardio global, pectoraux, épaules, jambes",
+    musclesTags: ["cardio", "pectoraux", "épaules", "jambes"],
+    equipment: "Poids de corps",
+    safety: [
+      "Ne pas relâcher le dos lors de la phase en planche.",
+      "Adapter l’amplitude du saut à son niveau.",
+      "Éviter si douleurs importantes de dos ou genou."
+    ],
+    criteria: [
+      "Descendre au sol, passer en planche, revenir et sauter bras vers le plafond.",
+      "Mouvement fluide, sans temps morts.",
+      "Rythme adapté au niveau."
+    ],
+    variations: [
+      "Plus facile : sans saut, ni pompe.",
+      "Plus difficile : burpees avec pompe complète."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Sauts à la corde",
+    category: "Cardio",
+    muscles: "Mollets, cardio, coordination",
+    musclesTags: ["cardio", "mollets", "coordination"],
+    equipment: "Corde à sauter (ou sans corde)",
+    safety: [
+      "Surface plane et dégagée.",
+      "Petits sauts, atterrissage sur l’avant du pied.",
+      "Genoux légèrement fléchis."
+    ],
+    criteria: [
+      "Sauts rythmiques, sans trop monter les genoux.",
+      "Poignets qui tournent, épaules relâchées.",
+      "Capacité à tenir sur la durée choisie."
+    ],
+    variations: [
+      "Sans corde : imitation du mouvement de bras et de jambes.",
+      "Double sauts ou variations de rythme pour les plus à l’aise."
+    ],
+    videoUrl: ""
+  },
+
+  {
+    name: "Course sur place",
+    category: "Cardio",
+    muscles: "Cardio global, membres inférieurs",
+    musclesTags: ["cardio", "course"],
+    equipment: "Poids de corps",
+    safety: [
+      "Posture droite (ne pas s’affaisser).",
+      "Amortir les appuis.",
+      "Adapter l’intensité à la séance (échauffement vs travail intense)."
+    ],
+    criteria: [
+      "Cadence régulière.",
+      "Bras actifs pour accompagner.",
+      "Possibilité de varier l’intensité selon les consignes."
+    ],
+    variations: [
+      "Course sur place avec changements de direction (visuels/consignes).",
+      "Sprints courts sur place alternés avec marche sur place."
+    ],
+    videoUrl: ""
+  }
+];
+
+function getCategoryBadgeClass(category) {
+  switch (category) {
+    case "Haut du corps": return "category-haut";
+    case "Bas du corps": return "category-bas";
+    case "Abdominaux": return "category-abdos";
+    case "Cardio": return "category-cardio";
+    default: return "";
+  }
+}
+
+function renderExerciseList() {
+  const listEl = document.getElementById("exerciseList");
+  if (!listEl) return;
+
+  const catFilter = document.getElementById("exerciseCategoryFilter").value || "ALL";
+  const search = (document.getElementById("exerciseSearch").value || "").toLowerCase().trim();
+
+  const filtered = EXERCISES.filter(ex => {
+    if (catFilter !== "ALL" && ex.category !== catFilter) return false;
+
+    if (!search) return true;
+
+    const haystack = [
+      ex.name,
+      ex.muscles,
+      ...(ex.musclesTags || [])
+    ].join(" ").toLowerCase();
+
+    return haystack.includes(search);
+  });
+
+  if (filtered.length === 0) {
+    listEl.innerHTML = `<p class="muted">Aucun exercice ne correspond à ta recherche.</p>`;
+    return;
+  }
+
+  listEl.innerHTML = filtered.map((ex) => `
+    <div class="exercise-item" data-ex-name="${ex.name}">
+      <div class="exercise-title-row">
+        <div class="exercise-name">${ex.name}</div>
+        <div class="exercise-badges">
+          <span class="exercise-badge ${getCategoryBadgeClass(ex.category)}">${ex.category}</span>
+          <span class="exercise-badge">${ex.equipment}</span>
+        </div>
+      </div>
+      <div class="exercise-muscles">
+        Muscles : ${ex.muscles}
+      </div>
+    </div>
+  `).join("");
+
+  listEl.querySelectorAll(".exercise-item").forEach(item => {
+    const exName = item.dataset.exName;
+    item.addEventListener("click", () => {
+      const ex = EXERCISES.find(e => e.name === exName);
+      if (ex) openExerciseModal(ex);
+    });
+  });
+}
+
+function openExerciseModal(ex) {
+  document.getElementById("exerciseTitle").textContent = ex.name;
+  document.getElementById("exerciseCategory").textContent = ex.category;
+  document.getElementById("exerciseMuscles").textContent = ex.muscles;
+
+  const equipmentLine = document.getElementById("exerciseEquipmentLine");
+  equipmentLine.textContent = ex.equipment ? `Matériel : ${ex.equipment}` : "";
+
+  document.getElementById("exerciseSafety").innerHTML =
+    (ex.safety || []).map(s => `<li>${s}</li>`).join("");
+
+  document.getElementById("exerciseCriteria").innerHTML =
+    (ex.criteria || []).map(c => `<li>${c}</li>`).join("");
+
+  document.getElementById("exerciseVariations").innerHTML =
+    (ex.variations || []).map(v => `<li>${v}</li>`).join("");
+
+  const link = document.getElementById("exerciseVideoLink");
+  if (ex.videoUrl) {
+    link.href = ex.videoUrl;
+    link.style.display = "inline-flex";
+  } else {
+    link.style.display = "none";
+  }
+
+  document.getElementById("exerciseModal").style.display = "flex";
+}
+
+function closeExerciseModal() {
+  const modal = document.getElementById("exerciseModal");
+  if (modal) modal.style.display = "none";
+}
+
+  const MUSCLES_INFO = [
+    { name: "Biceps", action: "Flexion de l'avant-bras" },
+    { name: "Triceps", action: "Extension de l'avant-bras" },
+    { name: "Deltoïde", action: "Élévation / rotation du bras" },
+    { name: "Trapèze", action: "Élévation de l'épaule" },
+    { name: "Adducteurs", action: "Adduction de la jambe" },
+    { name: "Pectoraux", action: "Rapprochent les bras" },
+    { name: "Quadriceps", action: "Extension du genou" },
+    { name: "Ischios-jambiers", action: "Flexion de la jambe" },
+    { name: "Grand fessier", action: "Extension de la cuisse" },
+    { name: "Abdominaux", action: "Flexion / rotation du tronc" },
+    { name: "Mollets", action: "Extension de la cheville" },
+    { name: "Lombaires", action: "Extension du tronc" },
+    { name: "Grand dorsal", action: "Fermeture bras-tronc" },
+    { name: "Abducteurs", action: "Abduction de la jambe" }
+  ];
+
+  function loadData() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return { classes: [] };
+      const data = JSON.parse(raw);
+      if (!data.classes) data.classes = [];
+      return data;
+    } catch {
+      return { classes: [] };
+    }
+  }
+// Sauvegarde locale + envoi à Firebase
+function saveData() {
+  const json = JSON.stringify(appState.data);
+  localStorage.setItem(STORAGE_KEY, json);
+  saveToFirebase(appState.data);
+}
+
+// Envoi des données à Firebase (mode très simple)
+function saveToFirebase(data) {
+  fetch(FIREBASE_URL, {
+    method: "PUT",                 // on remplace tout le document
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  }).catch((err) => {
+    console.log("Erreur d’envoi Firebase (non bloquant) :", err);
+  });
+}
+// Récupération depuis Firebase au démarrage
+async function syncFromFirebase() {
+  try {
+    const res = await fetch(FIREBASE_URL);
+    if (!res.ok) throw new Error("Réponse HTTP non OK");
+
+    const remoteData = await res.json();
+
+    // Si des données existent sur Firebase, on les utilise
+    if (remoteData && typeof remoteData === "object" && Array.isArray(remoteData.classes)) {
+      appState.data = remoteData;
+      // On met aussi en cache local
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appState.data));
+    }
+  } catch (err) {
+    console.log("Impossible de charger depuis Firebase, utilisation des données locales :", err);
+  }
+}
+
+  function createId() {
+    return Date.now().toString(36) + Math.random().toString(36).substring(2, 8);
+  }
+
+  const appState = {
+    data: loadData(),
+    selectedClassId: null,
+    selectedStudentId: null
+  };
+
+  const viewClasses  = document.getElementById("view-classes");
+  const viewStudents = document.getElementById("view-students");
+  const viewCarnet   = document.getElementById("view-carnet");
+
+  function showView(name) {
+    viewClasses.style.display  = name === "classes" ? "block" : "none";
+    viewStudents.style.display = name === "students" ? "block" : "none";
+    viewCarnet.style.display   = name === "carnet"   ? "block" : "none";
+  }
+
+  const selectClassEl = document.getElementById("selectClass");
+  const newClassNameEl = document.getElementById("newClassName");
+  const btnAddClass = document.getElementById("btnAddClass");
+  const btnDeleteClass = document.getElementById("btnDeleteClass");
+  const btnConfigTeams = document.getElementById("btnConfigTeams");
+
+  function renderClassSelect() {
+    const classes = appState.data.classes;
+    selectClassEl.innerHTML = "";
+    if (classes.length === 0) {
+      const opt = document.createElement("option");
+      opt.textContent = "Aucune classe pour l'instant";
+      opt.value = "";
+      selectClassEl.appendChild(opt);
+      appState.selectedClassId = null;
+      return;
+    }
+    classes.forEach(c => {
+      const opt = document.createElement("option");
+      opt.value = c.id;
+      opt.textContent = c.name;
+      selectClassEl.appendChild(opt);
+    });
+    const exists = classes.find(c => c.id === appState.selectedClassId);
+    if (exists) {
+      selectClassEl.value = appState.selectedClassId;
+    } else {
+      appState.selectedClassId = classes[0].id;
+      selectClassEl.value = classes[0].id;
+    }
+  }
+
+  function addClass() {
+    const name = newClassNameEl.value.trim();
+    if (!name) {
+      alert("Merci de saisir un nom de classe (ex : 206).");
+      return;
+    }
+    const newClass = { id: createId(), name, students: [] };
+    appState.data.classes.push(newClass);
+    appState.selectedClassId = newClass.id;
+    newClassNameEl.value = "";
+    saveData();
+    renderClassSelect();
+  }
+
+function deleteClass() {
+  const id = appState.selectedClassId;
+  if (!id) {
+    alert("Aucune classe sélectionnée.");
+    return;
+  }
+
+  // Demande du code enseignant
+  const code = prompt("Code de suppression (enseignant) :");
+  if (code === null) {
+    // Annulé
+    return;
+  }
+  if (code !== DELETE_CODE) {
+    alert("Code incorrect. Suppression annulée.");
+    return;
+  }
+
+  const classe = appState.data.classes.find(c => c.id === id);
+  if (!classe) return;
+
+  if (!confirm(`Supprimer définitivement la classe "${classe.name}" et tous les carnets associés ?`)) return;
+
+  appState.data.classes = appState.data.classes.filter(c => c.id !== id);
+  appState.selectedClassId = null;
+  saveData();
+  renderClassSelect();
+}
+
+
+  function goToStudentsView() {
+    const id = appState.selectedClassId;
+    if (!id) {
+      alert("Choisis d'abord une classe.");
+      return;
+    }
+    renderStudents();
+    showView("students");
+  }
+
+  const studentsClassNameEl = document.getElementById("studentsClassName");
+  const newStudentNameEl = document.getElementById("newStudentName");
+  const btnAddStudent = document.getElementById("btnAddStudent");
+  const studentsListEl = document.getElementById("studentsList");
+  const backToClassesEl = document.getElementById("backToClasses");
+
+  function getSelectedClass() {
+    return appState.data.classes.find(c => c.id === appState.selectedClassId) || null;
+  }
+
+  function renderStudents() {
+    const classe = getSelectedClass();
+    if (!classe) return;
+    studentsClassNameEl.textContent = classe.name;
+    studentsListEl.innerHTML = "";
+
+    if (classe.students.length === 0) {
+      const tr = document.createElement("tr");
+      const td = document.createElement("td");
+      td.colSpan = 4;
+      td.className = "muted";
+      td.textContent = "Aucun élève pour l'instant.";
+      tr.appendChild(td);
+      studentsListEl.appendChild(tr);
+      return;
+    }
+
+    classe.students.slice().sort((a, b) => a.name.localeCompare(b.name, "fr"))
+      .forEach((student, index) => {
+        const tr = document.createElement("tr");
+
+        const tdIndex = document.createElement("td");
+        tdIndex.textContent = index + 1;
+
+        const tdName = document.createElement("td");
+        const btnName = document.createElement("button");
+        btnName.className = "student-name-btn";
+        btnName.textContent = student.name;
+        btnName.addEventListener("click", () => openCarnet(student.id));
+        tdName.appendChild(btnName);
+
+        const tdOpen = document.createElement("td");
+        const openBtn = document.createElement("button");
+        openBtn.className = "btn btn-sm btn-secondary";
+        openBtn.textContent = "Ouvrir mon carnet ➜";
+        openBtn.addEventListener("click", () => openCarnet(student.id));
+        tdOpen.appendChild(openBtn);
+
+        const tdDelete = document.createElement("td");
+        const delBtn = document.createElement("button");
+        delBtn.className = "delete-btn";
+        delBtn.textContent = "✕";
+        delBtn.title = "Supprimer l'élève";
+        delBtn.addEventListener("click", () => removeStudent(student.id));
+        tdDelete.appendChild(delBtn);
+
+        tr.appendChild(tdIndex);
+        tr.appendChild(tdName);
+        tr.appendChild(tdOpen);
+        tr.appendChild(tdDelete);
+        studentsListEl.appendChild(tr);
+      });
+  }
+
+  function addStudent() {
+    const name = newStudentNameEl.value.trim();
+    if (!name) {
+      alert("Merci de saisir un prénom.");
+      return;
+    }
+    const classe = getSelectedClass();
+    if (!classe) return;
+    classe.students.push({ id: createId(), name, carnet: null });
+    newStudentNameEl.value = "";
+    newStudentNameEl.focus();
+    saveData();
+    renderStudents();
+  }
+
+  function removeStudent(studentId) {
+  const classe = getSelectedClass();
+  if (!classe) return;
+  const student = classe.students.find(s => s.id === studentId);
+  if (!student) return;
+
+  // Demande du code enseignant
+  const code = prompt(`Code de suppression (enseignant) pour effacer le carnet de ${student.name} :`);
+  if (code === null) {
+    // Annulé
+    return;
+  }
+  if (code !== DELETE_CODE) {
+    alert("Code incorrect. Suppression annulée.");
+    return;
+  }
+
+  if (!confirm(`Supprimer le carnet de ${student.name} ?`)) return;
+
+  classe.students = classe.students.filter(s => s.id !== studentId);
+  saveData();
+  renderStudents();
+}
+
+
+  const carnetStudentNameEl = document.getElementById("carnetStudentName");
+  const carnetClassNameEl = document.getElementById("carnetClassName");
+  const backToStudentsEl = document.getElementById("backToStudents");
+  const lessonsContainerEl = document.getElementById("lessonsContainer");
+  const musclesSheetContainerEl = document.getElementById("musclesSheetContainer");
+  const selfEvalNoteEl = document.getElementById("selfEvalNote");
+  const selfEvalSummaryEl = document.getElementById("selfEvalSummary");
+
+ function lessonTemplate(index) {
+  return {
+    number: index + 1,
+    date: "",
+    mobile: "",
+    stateLevel: "5",
+    warmup: "",
+    seriesCount: "",
+    intensity: "",
+    recovery: "",
+    effortLevel: "",
+    musclesLevel: "",
+    breathLevel: "",
+    heatLevel: "",
+    bilan: "",
+    observerName: "",
+    chronoSeconds: 0,   // <<< temps total de séance (en secondes)
+    validated: false,   // <<< leçon validée / pas validée
+    exercises: Array.from({ length: EXO_LINES }, () => ({
+      muscles: "",
+      name: "",
+      posture: "",
+      amplitude: "",
+      breathing: "",
+      remark: ""
+    }))
+  };
+}
+
+
+  function ensureCarnet(student) {
+    if (!student.carnet) {
+      student.carnet = { lessons: [], musclesSheet: null, selfEval: null };
+    }
+    if (!student.carnet.lessons || student.carnet.lessons.length !== LESSON_COUNT) {
+      const existing = student.carnet.lessons || [];
+      const lessons = [];
+      for (let i = 0; i < LESSON_COUNT; i++) {
+        lessons[i] = Object.assign(lessonTemplate(i), existing[i] || {});
+      }
+      student.carnet.lessons = lessons;
+    } else {
+      student.carnet.lessons = student.carnet.lessons.map((l, i) =>
+        Object.assign(lessonTemplate(i), l)
+      );
+    }
+
+    if (!student.carnet.musclesSheet || !student.carnet.musclesSheet.lines ||
+        student.carnet.musclesSheet.lines.length !== MUSCLES_INFO.length) {
+      const old = (student.carnet.musclesSheet && student.carnet.musclesSheet.lines) || [];
+      const lines = [];
+      for (let i = 0; i < MUSCLES_INFO.length; i++) {
+        lines[i] = old[i] || { num: "", exercise: "" };
+      }
+      student.carnet.musclesSheet = { lines };
+    }
+
+    if (!student.carnet.selfEval) {
+      student.carnet.selfEval = {
+        afl1e1: "",
+        afl1e2: "",
+        afl2: "",
+        afl3: "",
+        note: ""
+      };
+    }
+  }
+
+// --------- Gestion du chronomètre par leçon ---------
+const lessonTimers = {}; // { [lessonIndex]: { intervalId, startTime } }
+
+function formatSeconds(total) {
+  total = total || 0;
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+
+  const pad = (n) => String(n).padStart(2, "0");
+  if (h > 0) {
+    return `${pad(h)}:${pad(m)}:${pad(s)}`;
+  }
+  return `${pad(m)}:${pad(s)}`;
+}
+
+function updateTimerDisplayFor(lessonIndex) {
+  const student = getSelectedStudent();
+  if (!student || !student.carnet || !student.carnet.lessons[lessonIndex]) return;
+  const lesson = student.carnet.lessons[lessonIndex];
+
+  const el = document.getElementById(`timer_${lessonIndex}`);
+  if (!el) return;
+  el.textContent = formatSeconds(lesson.chronoSeconds || 0);
+}
+
+function onTimerStart(e) {
+  const student = getSelectedStudent();
+  if (!student || !student.carnet) return;
+
+  const lessonIndex = parseInt(e.target.dataset.lesson, 10);
+  if (isNaN(lessonIndex) || !student.carnet.lessons[lessonIndex]) return;
+  const lesson = student.carnet.lessons[lessonIndex];
+
+  // On arrête un éventuel ancien chrono pour cette leçon
+  if (lessonTimers[lessonIndex] && lessonTimers[lessonIndex].intervalId) {
+    clearInterval(lessonTimers[lessonIndex].intervalId);
+  }
+
+  const startTime = Date.now() / 1000 - (lesson.chronoSeconds || 0);
+
+  const intervalId = setInterval(() => {
+    const now = Date.now() / 1000;
+    lesson.chronoSeconds = Math.max(0, Math.floor(now - startTime));
+    updateTimerDisplayFor(lessonIndex);
+    saveData();
+  }, 1000);
+
+  lessonTimers[lessonIndex] = { intervalId, startTime };
+  updateTimerDisplayFor(lessonIndex);
+}
+
+function onTimerStop(e) {
+  const student = getSelectedStudent();
+  if (!student || !student.carnet) return;
+
+  const lessonIndex = parseInt(e.target.dataset.lesson, 10);
+  if (isNaN(lessonIndex) || !student.carnet.lessons[lessonIndex]) return;
+
+  if (lessonTimers[lessonIndex] && lessonTimers[lessonIndex].intervalId) {
+    clearInterval(lessonTimers[lessonIndex].intervalId);
+    delete lessonTimers[lessonIndex];
+  }
+  saveData();
+  updateTimerDisplayFor(lessonIndex);
+}
+
+function openCarnet(studentId) {
+  const classe = getSelectedClass();
+  if (!classe) return;
+  const student = classe.students.find(s => s.id === studentId);
+  if (!student) return;
+
+  ensureCarnet(student);
+  appState.selectedStudentId = studentId;
+
+  carnetStudentNameEl.textContent = student.name;
+  carnetClassNameEl.textContent = `Classe ${classe.name}`;
+
+  renderMusclesSheet(student);
+  renderLessons(student);
+  setActiveTab("muscles");
+  syncSelfEvalUI(student);
+
+  showView("carnet");
+  saveData();
+}
+
+  function getSelectedStudent() {
+    const classe = getSelectedClass();
+    if (!classe) return null;
+    return classe.students.find(s => s.id === appState.selectedStudentId) || null;
+  }
+
+  function renderMusclesSheet(student) {
+    const lines = student.carnet.musclesSheet.lines;
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>Muscle</th>
+            <th>Action articulaire (rappel)</th>
+            <th>Exemple d'exercice (à compléter)</th>
+            <th>N° sur le schéma</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${MUSCLES_INFO.map((m, idx) => `
+            <tr>
+              <td>${m.name}</td>
+              <td>${m.action}</td>
+              <td>
+                <input type="text"
+                       class="muscles-input"
+                       data-mline="${idx}"
+                       data-field="exercise"
+                       value="${lines[idx].exercise || ""}">
+              </td>
+              <td style="max-width:80px;">
+                <input type="text"
+                       class="muscles-input"
+                       data-mline="${idx}"
+                       data-field="num"
+                       value="${lines[idx].num || ""}">
+              </td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    `;
+    musclesSheetContainerEl.innerHTML = "";
+    musclesSheetContainerEl.appendChild(wrapper);
+
+    musclesSheetContainerEl.querySelectorAll(".muscles-input").forEach(input => {
+      input.addEventListener("input", onMusclesSheetChange);
+      input.addEventListener("change", onMusclesSheetChange);
+    });
+  }
+
+  function onMusclesSheetChange(e) {
+    const student = getSelectedStudent();
+    if (!student) return;
+    const idx = parseInt(e.target.dataset.mline, 10);
+    const field = e.target.dataset.field;
+    if (isNaN(idx) || !field) return;
+    student.carnet.musclesSheet.lines[idx][field] = e.target.value;
+    saveData();
+  }
+
+  function renderLessons(student) {
+    lessonsContainerEl.innerHTML = "";
+    student.carnet.lessons.forEach((lesson, index) => {
+      const details = document.createElement("details");
+      details.className = "lesson";
+      if (index === 0) details.open = true;
+
+     const summary = document.createElement("summary");
+summary.textContent = `Leçon ${lesson.number}${lesson.validated ? " ✅" : ""} ${lesson.date ? " – " + lesson.date : ""}`;
+details.appendChild(summary);
+
+
+      const body = document.createElement("div");
+      body.className = "lesson-body";
+
+      body.innerHTML = `
+        <div class="lesson-grid">
+  <div>
+    <label>Date de la leçon</label>
+    <input
+      type="date"
+      class="important-field"
+      data-lesson="${index}"
+      data-field="date"
+      value="${lesson.date || ""}">
+  </div>
+  <div>
+    <label>Mobile de travail</label>
+    <select
+      class="important-field"
+      data-lesson="${index}"
+      data-field="mobile">
+      <option value=""></option>
+      <option value="PUISSANCE" ${lesson.mobile === "PUISSANCE" ? "selected" : ""}>Puissance</option>
+      <option value="TONIFICATION" ${lesson.mobile === "TONIFICATION" ? "selected" : ""}>Tonification</option>
+    </select>
+    <div class="pill-info">
+      Puissance = explosivité • Tonification = travail plus soutenu
+    </div>
+  </div>
+  <div>
+    <div class="state-box">
+      <label>ÉTAT DE FORME</label>
+
+      <input type="range"
+             min="1"
+             max="10"
+             class="state-slider"
+             data-lesson="${index}"
+             data-field="stateLevel"
+             value="${lesson.stateLevel || "5"}">
+
+      <div class="state-value">
+        Niveau : ${lesson.stateLevel || "5"}/10
+      </div>
+
+      <div class="state-desc" id="stateDesc_${index}">
+        État de forme niveau ${lesson.stateLevel || "5"} :
+        ${STATE_DESCRIPTIONS[lesson.stateLevel || "5"]}
+      </div>
+    </div>
+  </div>
+</div>
+
+        </div>
+
+        <div>
+  <label>Échauffement (durée, exercices, consignes)</label>
+  <textarea
+    class="important-field"
+    data-lesson="${index}"
+    data-field="warmup"
+    placeholder="Ex : Mobilisations articulaires, cardiovasculaires et musculaires">${lesson.warmup || ""}</textarea>
+</div>
+
+        <div class="lesson-grid" style="margin-top:6px;">
+  <div>
+    <label>Nombre de séries</label>
+    <select
+      class="important-field"
+      data-lesson="${index}"
+      data-field="seriesCount">
+      <option value=""></option>
+      <option value="3" ${lesson.seriesCount === "3" ? "selected" : ""}>3 séries</option>
+      <option value="4" ${lesson.seriesCount === "4" ? "selected" : ""}>4 séries</option>
+    </select>
+  </div>
+  <div>
+    <label>Intensité choisie</label>
+    <select
+      class="important-field"
+      data-lesson="${index}"
+      data-field="intensity">
+      <option value=""></option>
+      <option value="30/30" ${lesson.intensity === "30/30" ? "selected" : ""}>30'' / 30''</option>
+      <option value="40/20" ${lesson.intensity === "40/20" ? "selected" : ""}>40'' / 20''</option>
+      <option value="45/15" ${lesson.intensity === "45/15" ? "selected" : ""}>45'' / 15''</option>
+    </select>
+  </div>
+  <div>
+    <label>Récupération entre les séries</label>
+    <input
+      type="text"
+      class="important-field"
+      data-lesson="${index}"
+      data-field="recovery"
+      placeholder="Ex : 1' active, 2' passive…"
+      value="${lesson.recovery || ""}">
+  </div>
+</div>
+
+         <div style="margin-top:8px;">
+  <div class="section-title">Programme de la leçon</div>
+
+  <div class="lesson-timer">
+    <button type="button"
+            class="btn btn-sm"
+            data-lesson="${index}"
+            data-timer="start">
+      Commencer la séance
+    </button>
+    <button type="button"
+            class="btn btn-sm btn-secondary"
+            data-lesson="${index}"
+            data-timer="stop">
+      Terminer la séance
+    </button>
+    <span class="muted timer-display" id="timer_${index}">
+      ${formatSeconds(lesson.chronoSeconds || 0)}
+    </span>
+  </div>
+
+  <p class="muted" style="margin-bottom:4px;">
+    Pour chaque exercice : muscles sollicités, nom de l'exercice et validation par l’observateur (posture, amplitude, respiration).
+  </p>
+
+  <!-- Bandeau observateur -->
+  <div style="margin-bottom:6px;">
+    <span class="muted" style="font-weight:600;">À remplir par l’observateur :</span>
+    <input
+      type="text"
+      data-lesson="${index}"
+      data-field="observerName"
+      placeholder="Prénom de l’observateur"
+      value="${lesson.observerName || ""}"
+      style="margin-top:4px;max-width:220px;width:100%;">
+  </div>
+
+  <div class="scroll-table">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Muscles sollicités</th>
+          <th>Nom de l'exercice</th>
+          <th class="obs-header">Posture</th>
+          <th class="obs-header">Amplitude</th>
+          <th class="obs-header">Respiration</th>
+          <th class="obs-header">Remarques de l'observateur</th>
+        </tr>
+      </thead>
+      <tbody>
+                ${lesson.exercises.map((exo, exIndex) => `
+                  <tr>
+                    <td>${exIndex + 1}</td>
+                    <td>
+                      <input type="text"
+                        data-lesson="${index}"
+                        data-ex-row="${exIndex}"
+                        data-ex-field="muscles"
+                        value="${exo.muscles || ""}">
+                    </td>
+                    <td>
+                      <input type="text"
+                        data-lesson="${index}"
+                        data-ex-row="${exIndex}"
+                        data-ex-field="name"
+                        value="${exo.name || ""}">
+                    </td>
+                   <td class="obs-cell">
+  <select
+    class="observer-field"
+    data-lesson="${index}"
+    data-ex-row="${exIndex}"
+    data-ex-field="posture">
+    ...
+  </select>
+</td>
+
+<td class="obs-cell">
+  <select
+    class="observer-field"
+    data-lesson="${index}"
+    data-ex-row="${exIndex}"
+    data-ex-field="amplitude">
+    ...
+  </select>
+</td>
+
+<td class="obs-cell">
+  <select
+    class="observer-field"
+    data-lesson="${index}"
+    data-ex-row="${exIndex}"
+    data-ex-field="breathing">
+    ...
+  </select>
+</td>
+
+<td class="obs-cell">
+  <input
+    type="text"
+    class="observer-field"
+    data-lesson="${index}"
+    data-ex-row="${exIndex}"
+    data-ex-field="remark"
+    placeholder="Ex : à la 8e rép, le mouvement se dégrade"
+    value="${exo.remark || ""}">
+</td>
+
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="ressenti-block">
+          <label>Échelle de ressenti – je me situe pour chaque ligne :</label>
+          <div class="scroll-table">
+            <table class="scale-table">
+              <thead>
+              <tr>
+                <th>Critère</th>
+                <th class="res1 center">Niveau 1</th>
+                <th class="res2 center">Niveau 2</th>
+                <th class="res3 center">Niveau 3</th>
+                <th class="res4 center">Niveau 4</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>Perception de l’effort</td>
+                ${[1,2,3,4].map(n => `
+                  <td class="res${n} center">
+                    <input type="radio"
+                           name="effort_${index}"
+                           data-lesson="${index}"
+                           data-field="effortLevel"
+                           value="${n}" ${lesson.effortLevel === String(n) ? "checked" : ""}>
+                  </td>`).join("")}
+              </tr>
+              <tr>
+                <td>Sensations musculaires</td>
+                ${[1,2,3,4].map(n => `
+                  <td class="res${n} center">
+                    <input type="radio"
+                           name="muscles_${index}"
+                           data-lesson="${index}"
+                           data-field="musclesLevel"
+                           value="${n}" ${lesson.musclesLevel === String(n) ? "checked" : ""}>
+                  </td>`).join("")}
+              </tr>
+              <tr>
+                <td>Sensations respiratoires</td>
+                ${[1,2,3,4].map(n => `
+                  <td class="res${n} center">
+                    <input type="radio"
+                           name="breath_${index}"
+                           data-lesson="${index}"
+                           data-field="breathLevel"
+                           value="${n}" ${lesson.breathLevel === String(n) ? "checked" : ""}>
+                  </td>`).join("")}
+              </tr>
+              <tr>
+                <td>Sensation de chaleur</td>
+                ${[1,2,3,4].map(n => `
+                  <td class="res${n} center">
+                    <input type="radio"
+                           name="heat_${index}"
+                           data-lesson="${index}"
+                           data-field="heatLevel"
+                           value="${n}" ${lesson.heatLevel === String(n) ? "checked" : ""}>
+                  </td>`).join("")}
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="lesson-validation-block">
+  <div>
+    <label>Bilan de la leçon</label>
+    <textarea
+      class="important-field"
+      data-lesson="${index}"
+      data-field="bilan"
+      placeholder="Ce qui a bien fonctionné, ce qui est à modifier, idées pour la prochaine séance…">${lesson.bilan || ""}</textarea>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:8px;">
+    <input
+      type="checkbox"
+      id="validate_${index}"
+      data-lesson="${index}"
+      data-field="validated"
+      ${lesson.validated ? "checked" : ""}
+      style="transform:scale(1.1);">
+    <label for="validate_${index}">
+      Je valide / j’enregistre ma leçon ✅
+    </label>
+  </div>
+</div>
+
+      `;
+      details.appendChild(body);
+      lessonsContainerEl.appendChild(details);
+    });
+
+    lessonsContainerEl.querySelectorAll("input[data-field], textarea[data-field], select[data-field]")
+      .forEach(el => {
+        el.addEventListener("change", onLessonFieldChange);
+        el.addEventListener("input", onLessonFieldChange);
+      });
+
+    lessonsContainerEl.querySelectorAll("input[data-ex-row], select[data-ex-row]")
+      .forEach(el => {
+        el.addEventListener("change", onLessonExerciseChange);
+        el.addEventListener("input", onLessonExerciseChange);
+      });
+      // Boutons de chrono
+lessonsContainerEl.querySelectorAll("[data-timer='start']").forEach(btn => {
+  btn.addEventListener("click", onTimerStart);
+});
+lessonsContainerEl.querySelectorAll("[data-timer='stop']").forEach(btn => {
+  btn.addEventListener("click", onTimerStop);
+});
+
+// Mise à jour visuelle initiale des timers
+student.carnet.lessons.forEach((_, idx) => updateTimerDisplayFor(idx));
+
+      
+  }
+
+ function onLessonFieldChange(e) {
+  const student = getSelectedStudent();
+  if (!student) return;
+
+  const lessonIndex = parseInt(e.target.dataset.lesson, 10);
+  if (isNaN(lessonIndex) || !student.carnet || !student.carnet.lessons[lessonIndex]) return;
+
+  const lesson = student.carnet.lessons[lessonIndex];
+  const field = e.target.dataset.field;
+  if (!field) return;
+
+  let value;
+  if (e.target.type === "checkbox") {
+    value = e.target.checked;
+  } else {
+    value = e.target.value;
+  }
+  lesson[field] = value;
+  saveData();
+
+  // Mise à jour du titre avec la date et/ou la validation
+  if (field === "date" || field === "validated") {
+    const details = e.target.closest("details.lesson");
+    const summary = details.querySelector("summary");
+    summary.textContent =
+      `Leçon ${lesson.number}${lesson.validated ? " ✅" : ""} ${lesson.date ? " – " + lesson.date : ""}`;
+  }
+
+  // Mise à jour du texte pour l'état de forme
+  if (field === "stateLevel") {
+    const level = e.target.value || "5";
+
+    const descEl = document.getElementById(`stateDesc_${lessonIndex}`);
+    if (descEl && STATE_DESCRIPTIONS[level]) {
+      descEl.textContent =
+        `État de forme niveau ${level} : ${STATE_DESCRIPTIONS[level]}`;
+    }
+
+    const valueEl = e.target.parentElement.querySelector(".state-value");
+    if (valueEl) {
+      valueEl.textContent = `Niveau : ${level}/10`;
+    }
+  }
+}
+
+  function onLessonExerciseChange(e) {
+    const student = getSelectedStudent();
+    if (!student) return;
+    const lessonIndex = parseInt(e.target.dataset.lesson, 10);
+    const rowIndex = parseInt(e.target.dataset.exRow, 10);
+    const field = e.target.dataset.exField;
+    if (isNaN(lessonIndex) || isNaN(rowIndex) || !field) return;
+    const lesson = student.carnet.lessons[lessonIndex];
+    if (!lesson || !lesson.exercises[rowIndex]) return;
+    lesson.exercises[rowIndex][field] = e.target.value;
+    saveData();
+  }
+
+  /* ----- Auto-évaluation ----- */
+
+  function syncSelfEvalUI(student) {
+    const selfEval = student.carnet.selfEval || {};
+    document.querySelectorAll("[data-self-afl]").forEach(input => {
+      const key = input.dataset.selfAfl;
+      if (selfEval[key] && selfEval[key] === input.value) {
+        input.checked = true;
+      } else {
+        input.checked = false;
+      }
+      input.addEventListener("change", onSelfEvalChange);
+    });
+    selfEvalNoteEl.value = selfEval.note || "";
+    updateSelfEvalSummary(selfEval.note || "");
+    selfEvalNoteEl.addEventListener("input", onSelfEvalNoteChange);
+  }
+
+  function onSelfEvalChange(e) {
+    const student = getSelectedStudent();
+    if (!student) return;
+    const key = e.target.dataset.selfAfl;
+    if (!key) return;
+    if (!student.carnet.selfEval) {
+      student.carnet.selfEval = { afl1e1: "", afl1e2: "", afl2: "", afl3: "", note: "" };
+    }
+    student.carnet.selfEval[key] = e.target.value;
+    saveData();
+  }
+
+  function onSelfEvalNoteChange(e) {
+    const student = getSelectedStudent();
+    if (!student) return;
+    if (!student.carnet.selfEval) {
+      student.carnet.selfEval = { afl1e1: "", afl1e2: "", afl2: "", afl3: "", note: "" };
+    }
+    student.carnet.selfEval.note = e.target.value;
+    saveData();
+    updateSelfEvalSummary(e.target.value);
+  }
+
+  function updateSelfEvalSummary(note) {
+    selfEvalSummaryEl.textContent = note
+      ? `Ma note : ${note}`
+      : "Ma note : …";
+  }
+
+  /* ----- Onglets ----- */
+
+  const tabButtons = document.querySelectorAll(".tab-btn");
+  const tabPanels = {
+    muscles: document.getElementById("tab-muscles"),
+    lessons: document.getElementById("tab-lessons"),
+    evaluation: document.getElementById("tab-evaluation"),
+    infos: document.getElementById("tab-infos"),
+    exercises: document.getElementById("tab-exercises")
+  };
+
+  function setActiveTab(name) {
+    tabButtons.forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.tab === name);
+    });
+    Object.keys(tabPanels).forEach(key => {
+      tabPanels[key].classList.toggle("active", key === name);
+    });
+      if (name === "exercises") {
+    renderExerciseList();
+  }
+  }
+
+  tabButtons.forEach(btn => {
+    btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
+  });
+
+  /* ----- Listeners généraux ----- */
+
+  selectClassEl.addEventListener("change", () => {
+    appState.selectedClassId = selectClassEl.value || null;
+  });
+
+  btnAddClass.addEventListener("click", addClass);
+  btnDeleteClass.addEventListener("click", deleteClass);
+  btnConfigTeams.addEventListener("click", goToStudentsView);
+
+  btnAddStudent.addEventListener("click", addStudent);
+  newStudentNameEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addStudent();
+    }
+  });
+
+  backToClassesEl.addEventListener("click", () => {
+    showView("classes");
+    saveData();
+  });
+
+  backToStudentsEl.addEventListener("click", () => {
+    showView("students");
+    renderStudents();
+    saveData();
+  });
+
+  // Filtres exercices + modale
+const catFilterEl = document.getElementById("exerciseCategoryFilter");
+const searchExEl = document.getElementById("exerciseSearch");
+if (catFilterEl && searchExEl) {
+  catFilterEl.addEventListener("change", renderExerciseList);
+  searchExEl.addEventListener("input", renderExerciseList);
+}
+
+const closeModalBtn = document.getElementById("closeExerciseModal");
+if (closeModalBtn) {
+  closeModalBtn.addEventListener("click", closeExerciseModal);
+}
+
+const exerciseModal = document.getElementById("exerciseModal");
+if (exerciseModal) {
+  exerciseModal.addEventListener("click", (e) => {
+    if (e.target === exerciseModal) closeExerciseModal();
+  });
+}
+/* ----- Init ----- */
+
+// On essaye d’abord de récupérer les données de Firebase,
+// puis on affiche l’interface.
+(async function init() {
+  await syncFromFirebase();
+  renderClassSelect();
+  showView("classes");
+})();
+
+</script>
+</body>
+</html>
