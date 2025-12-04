@@ -937,7 +937,6 @@ input[type="checkbox"][data-field="validated"] {
   .lesson-timer .timer-display {
     font-size: 1.8rem;
   }
-}
 
   </style>
 </head>
@@ -2636,6 +2635,30 @@ function saveData() {
   localStorage.setItem(STORAGE_KEY, json);
   saveToFirebase(appState.data);
 }
+// --- Sécurité / réparation des données classes/élèves ---
+
+function backupBeforeRewrite(data, location = "unknown") {
+  const timestamp = new Date().toISOString();
+  try {
+    localStorage.setItem(
+      "backup_" + timestamp + "_" + location,
+      JSON.stringify(data)
+    );
+  } catch (e) {
+    console.warn("Impossible de créer une sauvegarde locale :", e);
+  }
+}
+
+function ensureClassHasStudentsArray(classe, location = "") {
+  if (!classe) return;
+  if (!classe.students || !Array.isArray(classe.students)) {
+    console.warn("⚠️ Correction automatique : classe sans tableau d'élèves. (Lieu : " + location + ")");
+    // on sauvegarde l’état actuel avant correction
+    backupBeforeRewrite(appState.data, location);
+    // on répare
+    classe.students = [];
+  }
+}
 
 // Envoi des données à Firebase (mode très simple)
 function saveToFirebase(data) {
@@ -2783,10 +2806,15 @@ function deleteClass() {
   }
 
   function renderStudents() {
-    const classe = getSelectedClass();
-    if (!classe) return;
-    studentsClassNameEl.textContent = classe.name;
-    studentsListEl.innerHTML = "";
+  const classe = getSelectedClass();
+  if (!classe) return;
+
+  // ✅ on s'assure que la classe a bien un tableau d'élèves
+  ensureClassHasStudentsArray(classe, "renderStudents()");
+
+  studentsClassNameEl.textContent = classe.name;
+  studentsListEl.innerHTML = "";
+
 
     if (classe.students.length === 0) {
       const tr = document.createElement("tr");
@@ -3022,6 +3050,10 @@ function onTimerStop(e) {
 function openCarnet(studentId) {
   const classe = getSelectedClass();
   if (!classe) return;
+
+  // ✅ on sécurise aussi ici
+  ensureClassHasStudentsArray(classe, "openCarnet()");
+
   const student = classe.students.find(s => s.id === studentId);
   if (!student) return;
 
@@ -3265,65 +3297,119 @@ details.appendChild(summary);
       </thead>
       <tbody>
                 ${lesson.exercises.map((exo, exIndex) => `
-                  <tr>
-                    <td>${exIndex + 1}</td>
-                    <td>
-                      <input type="text"
-                        data-lesson="${index}"
-                        data-ex-row="${exIndex}"
-                        data-ex-field="muscles"
-                        value="${exo.muscles || ""}">
-                    </td>
-                    <td>
-                      <input type="text"
-                        data-lesson="${index}"
-                        data-ex-row="${exIndex}"
-                        data-ex-field="name"
-                        value="${exo.name || ""}">
-                    </td>
-                   <td class="obs-cell">
-  <select
-    class="observer-field"
-    data-lesson="${index}"
-    data-ex-row="${exIndex}"
-    data-ex-field="posture">
-    ...
-  </select>
-</td>
+  <tr>
+    <td>${exIndex + 1}</td>
+    <td>
+      <input type="text"
+        data-lesson="${index}"
+        data-ex-row="${exIndex}"
+        data-ex-field="muscles"
+        value="${exo.muscles || ""}">
+    </td>
+    <td>
+      <input type="text"
+        data-lesson="${index}"
+        data-ex-row="${exIndex}"
+        data-ex-field="name"
+        value="${exo.name || ""}">
+    </td>
 
-<td class="obs-cell">
-  <select
-    class="observer-field"
-    data-lesson="${index}"
-    data-ex-row="${exIndex}"
-    data-ex-field="amplitude">
-    ...
-  </select>
-</td>
+    <!-- POSTURE -->
+    <td class="obs-cell">
+      <div style="display:flex;flex-direction:column;gap:2px;font-size:0.8rem;">
+        <label style="display:flex;align-items:center;gap:4px;">
+          <input
+            type="radio"
+            data-lesson="${index}"
+            data-ex-row="${exIndex}"
+            data-ex-field="posture"
+            name="posture_${index}_${exIndex}"
+            value="OUI"
+            ${exo.posture === "OUI" ? "checked" : ""}>
+          <span>Oui</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:4px;">
+          <input
+            type="radio"
+            data-lesson="${index}"
+            data-ex-row="${exIndex}"
+            data-ex-field="posture"
+            name="posture_${index}_${exIndex}"
+            value="CORRIGER"
+            ${exo.posture === "CORRIGER" ? "checked" : ""}>
+          <span>À corriger</span>
+        </label>
+      </div>
+    </td>
 
-<td class="obs-cell">
-  <select
-    class="observer-field"
-    data-lesson="${index}"
-    data-ex-row="${exIndex}"
-    data-ex-field="breathing">
-    ...
-  </select>
-</td>
+    <!-- AMPLITUDE -->
+    <td class="obs-cell">
+      <div style="display:flex;flex-direction:column;gap:2px;font-size:0.8rem;">
+        <label style="display:flex;align-items:center;gap:4px;">
+          <input
+            type="radio"
+            data-lesson="${index}"
+            data-ex-row="${exIndex}"
+            data-ex-field="amplitude"
+            name="amplitude_${index}_${exIndex}"
+            value="OUI"
+            ${exo.amplitude === "OUI" ? "checked" : ""}>
+          <span>Oui</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:4px;">
+          <input
+            type="radio"
+            data-lesson="${index}"
+            data-ex-row="${exIndex}"
+            data-ex-field="amplitude"
+            name="amplitude_${index}_${exIndex}"
+            value="CORRIGER"
+            ${exo.amplitude === "CORRIGER" ? "checked" : ""}>
+          <span>À corriger</span>
+        </label>
+      </div>
+    </td>
 
-<td class="obs-cell">
-  <input
-    type="text"
-    class="observer-field"
-    data-lesson="${index}"
-    data-ex-row="${exIndex}"
-    data-ex-field="remark"
-    placeholder="Ex : à la 8e rép, le mouvement se dégrade"
-    value="${exo.remark || ""}">
-</td>
+    <!-- RESPIRATION -->
+    <td class="obs-cell">
+      <div style="display:flex;flex-direction:column;gap:2px;font-size:0.8rem;">
+        <label style="display:flex;align-items:center;gap:4px;">
+          <input
+            type="radio"
+            data-lesson="${index}"
+            data-ex-row="${exIndex}"
+            data-ex-field="breathing"
+            name="breathing_${index}_${exIndex}"
+            value="OUI"
+            ${exo.breathing === "OUI" ? "checked" : ""}>
+          <span>Oui</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:4px;">
+          <input
+            type="radio"
+            data-lesson="${index}"
+            data-ex-row="${exIndex}"
+            data-ex-field="breathing"
+            name="breathing_${index}_${exIndex}"
+            value="CORRIGER"
+            ${exo.breathing === "CORRIGER" ? "checked" : ""}>
+          <span>À corriger</span>
+        </label>
+      </div>
+    </td>
 
-                  </tr>
-                `).join("")}
+    <!-- REMARQUES -->
+    <td class="obs-cell">
+      <input type="text"
+        data-lesson="${index}"
+        data-ex-row="${exIndex}"
+        data-ex-field="remark"
+        placeholder="Ex : à la 8e rép, le mouvement se dégrade"
+        value="${exo.remark || ""}">
+    </td>
+  </tr>
+`).join("")}
+
               </tbody>
             </table>
           </div>
