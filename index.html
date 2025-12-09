@@ -32,10 +32,10 @@
     }
 
     .app {
-      max-width: 1100px;
-      margin: 12px auto 40px;
-      padding: 0 10px;
-    }
+  max-width: 480px;        /* largeur type smartphone, centré */
+  margin: 12px auto 80px;  /* petit espace bas pour la barre d’onglets */
+  padding: 0 12px 80px;    /* padding bas pour ne pas que le contenu passe sous la barre */
+}
 
     header {
       margin-bottom: 10px;
@@ -340,31 +340,60 @@ input[type="range"].state-slider::-webkit-slider-runnable-track {
 
     /* TABS */
 
-    .tabbar {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      margin-top: 8px;
-      -webkit-overflow-scrolling: touch;
-    }
+    /* Barre d’onglets façon appli mobile en bas de l’écran */
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  border-top: 1px solid var(--border);
+  padding: 4px 8px env(safe-area-inset-bottom);
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  z-index: 50;
+}
 
-    .tab-btn {
-      border-radius: var(--radius-pill);
-      border: 1px solid var(--border);
-      padding: 7px 12px;
-      font-size: 0.85rem;
-      background: #ffffff;
-      cursor: pointer;
-      white-space: nowrap;
-      color: var(--muted);
-    }
+/* Boutons d’onglets : icône + texte, centrés */
+.tab-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  padding: 4px 2px;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.7rem;
+}
 
-    .tab-btn.active {
-      background: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
-    }
+/* Icône de l’onglet */
+.tab-btn-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+/* Label sous l’icône */
+.tab-btn-label {
+  margin-top: 1px;
+}
+
+/* Onglet actif */
+.tab-btn.active {
+  background: #e0f2fe;
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+.tab-btn.active .tab-btn-icon {
+  color: #1d4ed8;
+}
 
     .tab-panel { display: none; margin-top: 10px; }
     .tab-panel.active { display: block; }
@@ -439,6 +468,257 @@ input[type="range"].state-slider::-webkit-slider-runnable-track {
       margin-bottom: 8px;
     }
 
+    /* -------- Leçon 3 : affichage en 5 étapes -------- */
+.steps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.step-card {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #f9fafb;
+  padding: 8px 10px;
+}
+
+.step-header {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.step-number {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--primary-dark);
+}
+
+.step-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.step-card p {
+  margin: 0 0 4px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+/* ----- Chaîne de progression back squat (Étape 3 leçon 3) ----- */
+
+.squat-progression {
+  margin-top: 6px;
+}
+
+.squat-arrow-caption {
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+}
+
+.squat-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.squat-step {
+  flex: 1 1 80px;
+  max-width: 110px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #f9fafb;
+  padding: 6px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  transition: background 0.15s, border-color 0.15s, transform 0.08s;
+}
+
+.squat-step:hover {
+  transform: translateY(-1px);
+  border-color: var(--primary);
+}
+
+.squat-number {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e7eb;
+  font-weight: 700;
+}
+
+.squat-label {
+  text-align: center;
+}
+
+.squat-step.active {
+  background: #eff6ff;
+  border-color: var(--primary);
+}
+
+.squat-step.active .squat-number {
+  background: var(--primary);
+  color: #ffffff;
+}
+/* ---- Observation squat – Étape 4 ---- */
+.obs-schema {
+  margin-top: 8px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #f9fafb;
+}
+
+.obs-schema img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.obs-criteria-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.obs-criterion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+}
+
+.obs-criterion-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.flag-options {
+  display: flex;
+  gap: 4px;
+}
+
+/* Boutons vert/rouge type radio */
+.flag-option {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: #e5e7eb;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.flag-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Vert = OK */
+.flag-green {
+  background: #dcfce7;
+  border-color: #22c55e;
+}
+
+/* Rouge = KO */
+.flag-red {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+/* Quand sélectionné, on renforce le bord */
+.flag-option input:checked + span {
+  outline: 2px solid #111827;
+  outline-offset: 1px;
+}
+
+/* ----- Étape 4 : grille d'observation du squat ----- */
+
+.step4-criteria-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.criterion-card {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #f9fafb;
+  padding: 6px 8px;
+  font-size: 0.8rem;
+}
+
+.criterion-title {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.criterion-options {
+  margin-bottom: 4px;
+}
+
+.criterion-flags {
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.flag-btn {
+  flex: 1;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  padding: 4px 6px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  background: #ffffff;
+}
+
+.flag-btn.green { /* drapeau vert */
+}
+
+.flag-btn.red { /* drapeau rouge */
+}
+
+.flag-btn.active.green {
+  background: #bbf7d0;
+  border-color: #16a34a;
+  font-weight: 600;
+}
+
+.flag-btn.active.red {
+  background: #fecaca;
+  border-color: #dc2626;
+  font-weight: 600;
+}
+
+.step4-summary {
+  font-size: 0.8rem;
+}
+
+
     .pill-info {
       display: inline-flex;
       padding: 3px 8px;
@@ -489,6 +769,58 @@ input[type="range"].state-slider::-webkit-slider-runnable-track {
       font-size: 0.82rem;
       margin-bottom: 4px;
     }
+    .step-card {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #f9fafb;
+}
+
+.step-header {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.step-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+}
+
+.fms-level-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.fms-level {
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+  padding: 6px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  font-size: 0.8rem;
+}
+
+.fms-level input {
+  margin-top: 3px;
+}
+
+.fms1 { background: #fee2e2; }  /* Niveau 1 = rouge clair */
+.fms2 { background: #fef3c7; }  /* Niveau 2 = jaune */
+.fms3 { background: #dcfce7; }  /* Niveau 3 = vert */
 
     .self-eval-label {
       font-weight: 500;
@@ -947,30 +1279,31 @@ input[type="checkbox"][data-field="validated"] {
     <p>Application locale pour suivre le travail des élèves (données stockées sur cet appareil).</p>
   </header>
 
-  <!-- PAGE 1 : GESTION DES CLASSES -->
+    <!-- PAGE 1 : GESTION DES CLASSES -->
   <section id="view-classes" class="card">
-    <h2>Mes classes</h2>
-    <p>Si tu effaces l’historique ou changes d’appareil, toutes les données seront perdues.</p>
+  <h2>Mes classes</h2>
+  <p>Si tu effaces l’historique ou changes d’appareil, toutes les données seront perdues.</p>
 
-    <div class="row" style="margin-top:8px;">
-      <div class="col">
-        <label for="selectClass">Classe sélectionnée</label>
-        <select id="selectClass"></select>
-      </div>
+  <div class="row" style="margin-top:8px;">
+    <div class="col">
+      <label for="selectClass">Classe sélectionnée</label>
+      <select id="selectClass"></select>
     </div>
+  </div>
 
-    <div class="row">
-      <div class="col">
-        <label for="newClassName">Nouvelle classe</label>
-        <input id="newClassName" type="text" placeholder="Ex : 206, 3eB, Term 2…">
-      </div>
-      <div class="col" style="display:flex;flex-direction:column;gap:6px;justify-content:flex-end;">
-        <button id="btnAddClass" class="btn">+ Ajouter une classe</button>
-        <button id="btnConfigTeams" class="btn btn-secondary">Configurer les élèves</button>
-        <button id="btnDeleteClass" class="btn btn-danger">Supprimer la classe</button>
-      </div>
+  <div class="row">
+    <div class="col">
+      <label for="newClassName">Nouvelle classe</label>
+      <input id="newClassName" type="text" placeholder="Ex : 206, 3eB, Term 2…">
     </div>
-  </section>
+    <div class="col" style="display:flex;flex-direction:column;gap:6px;justify-content:flex-end;">
+      <button id="btnAddClass" class="btn">+ Ajouter une classe</button>
+      <!-- 🔵 même ID qu’avant, seul le texte change -->
+      <button id="btnConfigTeams" class="btn btn-secondary">Aller dans ma classe</button>
+      <button id="btnDeleteClass" class="btn btn-danger">Supprimer la classe</button>
+    </div>
+  </div>
+</section>
 
   <!-- PAGE 2 : ÉLÈVES -->
   <section id="view-students" class="card" style="display:none;">
@@ -1019,12 +1352,31 @@ input[type="checkbox"][data-field="validated"] {
 
     <!-- Onglets -->
    <div class="tabbar">
-  <button class="tab-btn active" data-tab="muscles">Muscles</button>
-  <button class="tab-btn" data-tab="lessons">Mon carnet</button>
-  <button class="tab-btn" data-tab="evaluation">Évaluation</button>
-  <button class="tab-btn" data-tab="infos">Bon à savoir</button>
-  <button class="tab-btn" data-tab="exercises">Exercices</button>
+    <button class="tab-btn" data-tab="lessons">
+    <span class="tab-btn-icon">📘</span>
+    <span class="tab-btn-label">Carnet</span>
+  </button>
+  <button class="tab-btn active" data-tab="muscles">
+    <span class="tab-btn-icon">💪</span>
+    <span class="tab-btn-label">Muscles</span>
+  </button>
+
+  <button class="tab-btn" data-tab="evaluation">
+    <span class="tab-btn-icon">🎯</span>
+    <span class="tab-btn-label">Éval.</span>
+  </button>
+
+  <button class="tab-btn" data-tab="infos">
+    <span class="tab-btn-icon">💡</span>
+    <span class="tab-btn-label">Infos</span>
+  </button>
+
+  <button class="tab-btn" data-tab="exercises">
+    <span class="tab-btn-icon">🏋️</span>
+    <span class="tab-btn-label">Exos</span>
+  </button>
 </div>
+
 
 
     <!-- Onglet 1 : MUSCLES -->
@@ -1035,9 +1387,9 @@ input[type="checkbox"][data-field="validated"] {
       </p>
 
       <div style="margin:6px 0 10px;">
-        <img src="schema-muscles.png"
-             alt="Schéma des principaux muscles."
-             style="max-width:100%;height:auto;border-radius:10px;border:1px solid var(--border);">
+        <img src="Muscles.png"
+     alt="Schéma des principaux muscles."
+     style="max-width:100%;height:auto;border-radius:10px;border:1px solid var(--border);">
       </div>
 
       <div id="musclesSheetContainer" class="scroll-table"></div>
@@ -1529,6 +1881,134 @@ const FIREBASE_URL = "https://carnet-d-entrainement-muscu-default-rtdb.europe-we
   9: "En excellente forme, grande vitalité, aucune fatigue ressentie.",
   10: "Au top ! État optimal, énergie débordante, prêt pour un effort intense."
 };
+// --- Exercices proposés selon les axes à travailler (Étape 4) ---
+const AXIS_EXERCISES = {
+  A: {
+    label: "(A) Force",
+    description: "Renforcer la force sur les jambes et le contrôle en charge.",
+    exercises: [
+      "Poussée latérale contre un mur avec ballon (travail unilatéral et contrôle du genou).",
+      "Split squat / fente avant avec charge tenue sur l'épaule ou devant la poitrine.",
+      "Abduction de hanche en décubitus latéral avec élastique autour des genoux."
+    ]
+  },
+  B: {
+    label: "(B) Stabilité",
+    description: "Améliorer le gainage et la stabilité du tronc pendant le squat.",
+    exercises: [
+      "Dead bug (bras/jambes opposés) en gardant le bas du dos collé au sol.",
+      "Hip thrust / pont avec les pieds au mur pour stabiliser bassin et tronc.",
+      "Gainage latéral (sur coude) en gardant le bassin aligné."
+    ]
+  },
+  C: {
+    label: "(C) Mobilité",
+    description: "Travailler la mobilité de hanche, cheville et colonne.",
+    exercises: [
+      "Fente genou au sol avec charge légère (kettlebell ou haltère) devant le corps.",
+      "Auto-massage au foam-roller sur la chaîne antérieure / latérale de la cuisse.",
+      "Étirement/mobilité des épaules sur banc (position de prière, bras surélevés)."
+    ]
+  }
+};
+
+// Étape 4 – lien entre critères et axes de travail
+const STEP4_CONFIG = {
+  dos:        { axis: "C", axisLabel: "Mobilité" },
+  equilibre:  { axis: "B", axisLabel: "Stabilité" },
+  talons:     { axis: "C", axisLabel: "Mobilité" },
+  amplitude:  { axis: "C", axisLabel: "Mobilité" },
+  genoux:     { axis: "A", axisLabel: "Force" }
+};
+
+function updateStep4Summary(lessonIndex) {
+  const student = getSelectedStudent();
+  if (!student || !student.carnet || !student.carnet.lessons[lessonIndex]) return;
+
+  const lesson = student.carnet.lessons[lessonIndex];
+
+  const summaryEl = document.getElementById(`obsSummary_${lessonIndex}`);
+  const axisEl = document.getElementById(`obsAxisExos_${lessonIndex}`);
+  if (!summaryEl || !axisEl) return;
+
+  // On regarde quels critères sont en "KO"
+  const problems = [];
+
+  if (lesson.obsDos === "KO")       problems.push("dos");
+  if (lesson.obsEquilibre === "KO") problems.push("équilibre");
+  if (lesson.obsGenoux === "KO")    problems.push("genoux");
+  if (lesson.obsAmplitude === "KO") problems.push("amplitude");
+  if (lesson.obsTalons === "KO")    problems.push("talons");
+
+  // Rien de KO → tout est OK
+  if (problems.length === 0) {
+    summaryEl.textContent =
+      "Tout est ✅ : ton squat est correctement réalisé sur ces critères.";
+    axisEl.innerHTML =
+      "<em>Pas de priorité particulière, tu peux continuer à progresser en charge progressivement.</em>";
+    return;
+  }
+
+  const axes = [];
+  const exos = [];
+
+  // Règles que tu m'as données :
+  // - prb dos → travail mobilité
+  // - prb équilibre → travail stabilité
+  // - prb genoux → travail force
+  // - prb amplitude → travail mobilité
+  // - prb talons → travail mobilité
+
+  if (problems.includes("dos")) {
+    axes.push("Mobilité du dos et contrôle du tronc");
+    exos.push(
+      "• Mobilité de la colonne (chat/vache, rotations thoraciques)<br>" +
+      "• Gainage (planche, dead bug) pour fixer le tronc"
+    );
+  }
+
+  if (problems.includes("équilibre")) {
+    axes.push("Stabilité et équilibre global");
+    exos.push(
+      "• Squat au mur ou box squat pour se stabiliser<br>" +
+      "• Travail sur une jambe (équilibre sur un pied, fente statique)"
+    );
+  }
+
+  if (problems.includes("genoux")) {
+    axes.push("Force et contrôle au niveau des genoux");
+    exos.push(
+      "• Squats lents en surveillant l’alignement genou/pied<br>" +
+      "• Fentes avant avec focus sur l’axe genou/pied"
+    );
+  }
+
+  if (problems.includes("amplitude")) {
+    axes.push("Mobilité de hanches et de chevilles");
+    exos.push(
+      "• Étirements de hanches (fente basse, pigeon)<br>" +
+      "• Travail de flexion de cheville (genou vers l’avant contre un mur)"
+    );
+  }
+
+  if (problems.includes("talons")) {
+    axes.push("Mobilité de la cheville (talons qui restent au sol)");
+    exos.push(
+      "• Étirements de mollets<br>" +
+      "• Squat avec talons surélevés puis baisser progressivement la cale"
+    );
+  }
+
+  // Texte récap
+  summaryEl.textContent =
+    "Axes prioritaires pour améliorer ton squat : " + axes.join(" – ") + ".";
+
+  // Liste des exos
+  axisEl.innerHTML =
+    "<strong>Exemples d’exercices à travailler :</strong><br>" +
+    exos.join("<br><br>");
+}
+
 
 // ------------------- BIBLIOTHÈQUE D'EXERCICES -------------------
 
@@ -2714,6 +3194,9 @@ async function syncFromFirebase() {
   const btnAddClass = document.getElementById("btnAddClass");
   const btnDeleteClass = document.getElementById("btnDeleteClass");
   const btnConfigTeams = document.getElementById("btnConfigTeams");
+btnConfigTeams.addEventListener("click", goToStudentsView);
+
+  const goToStudentsText = document.getElementById("goToStudentsText");
 
   function renderClassSelect() {
     const classes = appState.data.classes;
@@ -2918,18 +3401,41 @@ function deleteClass() {
     date: "",
     mobile: "",
     stateLevel: "5",
+
+    // Champs génériques (utilisés dans toutes les leçons)
     warmup: "",
     seriesCount: "",
     intensity: "",
     recovery: "",
+
+    // 🔵 Champs spécifiques à la LEÇON 3 (5 étapes)
+    step1Testing: "",
+    step2Warmup: "",       // on liera aussi ce champ à "warmup"
+    step3Progression: "",
+    step4ChargeCorrectif: "",
+    step5Finish: "",
+
     effortLevel: "",
     musclesLevel: "",
     breathLevel: "",
     heatLevel: "",
+    // Étape 4 – observation squat
+    step4Dos: "",
+    step4Equilibre: "",
+    step4Talons: "",
+    step4Amplitude: "",
+    step4Genoux: "",
+    step4Rer: "",
+
     bilan: "",
     observerName: "",
-    chronoSeconds: 0,   // <<< temps total de séance (en secondes)
-    validated: false,   // <<< leçon validée / pas validée
+    chronoSeconds: 0,
+    validated: false,
+    fmsDeepSquatLevel: "",
+    fmsDeepSquatNotes: "",
+    squatProgressionLevel: "",     // niveau atteint dans la chaîne de progression (1 à 5)
+    squatProgressionNotes: "",     // remarques de l'élève sur cette progression
+
     exercises: Array.from({ length: EXO_LINES }, () => ({
       muscles: "",
       name: "",
@@ -3065,7 +3571,7 @@ function openCarnet(studentId) {
 
   renderMusclesSheet(student);
   renderLessons(student);
-  setActiveTab("muscles");
+  setActiveTab("lessons");
   syncSelfEvalUI(student);
 
   showView("carnet");
@@ -3134,34 +3640,54 @@ function openCarnet(studentId) {
     saveData();
   }
 
-  function renderLessons(student) {
-    lessonsContainerEl.innerHTML = "";
-    student.carnet.lessons.forEach((lesson, index) => {
-      const details = document.createElement("details");
-      details.className = "lesson";
-      if (index === 0) details.open = true;
+function renderLessons(student) {
+  lessonsContainerEl.innerHTML = "";
 
-     const summary = document.createElement("summary");
-summary.textContent = `Leçon ${lesson.number}${lesson.validated ? " ✅" : ""} ${lesson.date ? " – " + lesson.date : ""}`;
-details.appendChild(summary);
+  student.carnet.lessons.forEach((lesson, index) => {
+    const details = document.createElement("details");
+    details.className = "lesson";
+    if (index === 0) details.open = true;
 
+    const summary = document.createElement("summary");
+    summary.textContent =
+      `Leçon ${lesson.number}${lesson.validated ? " ✅" : ""} ${lesson.date ? " – " + lesson.date : ""}`;
+    details.appendChild(summary);
 
-      const body = document.createElement("div");
-      body.className = "lesson-body";
+    const body = document.createElement("div");
+    body.className = "lesson-body";
 
+    /* ------------------ LEÇONS 1 ET 2 : FORMAT CLASSIQUE ------------------ */
+    if (index === 0 || index === 1) {
       body.innerHTML = `
-        <div class="lesson-grid">
-  <div>
-    <label>Date de la leçon</label>
-    <input
-      type="date"
-      class="important-field"
-      data-lesson="${index}"
-      data-field="date"
-      value="${lesson.date || ""}">
-  </div>
-  <div>
-    <label>Mobile de travail</label>
+        <div class="section-title">Leçon ${lesson.number} – Mon programme de musculation</div>
+
+        <div class="row" style="margin-top:6px;">
+          <div class="col">
+            <label>Date de la leçon</label>
+            <input type="date"
+                   data-lesson="${index}"
+                   data-field="date"
+                   value="${lesson.date || ""}">
+          </div>
+        </div>
+
+        <div class="state-box">
+          <label>Mon état de forme avant la séance</label>
+          <input type="range"
+                 min="1"
+                 max="10"
+                 value="${lesson.stateLevel || "5"}"
+                 class="state-slider"
+                 data-lesson="${index}"
+                 data-field="stateLevel">
+          <div class="state-value">Niveau : ${lesson.stateLevel || "5"}/10</div>
+          <div id="stateDesc_${index}" class="state-desc">
+            ${STATE_DESCRIPTIONS[lesson.stateLevel || 5]}
+          </div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <label>Mobile de travail</label>
     <select
       class="important-field"
       data-lesson="${index}"
@@ -3175,39 +3701,14 @@ details.appendChild(summary);
     </div>
   </div>
   <div>
-    <div class="state-box">
-      <label>ÉTAT DE FORME</label>
 
-      <input type="range"
-             min="1"
-             max="10"
-             class="state-slider"
-             data-lesson="${index}"
-             data-field="stateLevel"
-             value="${lesson.stateLevel || "5"}">
-
-      <div class="state-value">
-        Niveau : ${lesson.stateLevel || "5"}/10
-      </div>
-
-      <div class="state-desc" id="stateDesc_${index}">
-        État de forme niveau ${lesson.stateLevel || "5"} :
-        ${STATE_DESCRIPTIONS[lesson.stateLevel || "5"]}
-      </div>
-    </div>
-  </div>
-</div>
-
+        <div style="margin-top:8px;">
+          <label>Échauffement / Warm up</label>
+          <textarea
+            data-lesson="${index}"
+            data-field="warmup"
+            placeholder="Décris ton échauffement : mobilités, cardio léger, mise en action…">${lesson.warmup || ""}</textarea>
         </div>
-
-        <div>
-  <label>Échauffement (durée, exercices, consignes)</label>
-  <textarea
-    class="important-field"
-    data-lesson="${index}"
-    data-field="warmup"
-    placeholder="Ex : Mobilisations articulaires, cardiovasculaires et musculaires">${lesson.warmup || ""}</textarea>
-</div>
 
         <div class="lesson-grid" style="margin-top:6px;">
   <div>
@@ -3245,177 +3746,172 @@ details.appendChild(summary);
   </div>
 </div>
 
-         <div style="margin-top:8px;">
-  <div class="section-title">Programme de la leçon</div>
-
-  <div class="lesson-timer">
-    <button type="button"
-            class="btn btn-sm"
-            data-lesson="${index}"
-            data-timer="start">
-      Commencer la séance
-    </button>
-    <button type="button"
-            class="btn btn-sm btn-secondary"
-            data-lesson="${index}"
-            data-timer="stop">
-      Terminer la séance
-    </button>
-    <span class="muted timer-display" id="timer_${index}">
-      ${formatSeconds(lesson.chronoSeconds || 0)}
-    </span>
-  </div>
-
-  <p class="muted" style="margin-bottom:4px;">
-    Pour chaque exercice : muscles sollicités, nom de l'exercice et validation par l’observateur (posture, amplitude, respiration).
-  </p>
-
-  <!-- Bandeau observateur -->
-  <div style="margin-bottom:6px;">
-    <span class="muted" style="font-weight:600;">À remplir par l’observateur :</span>
-    <input
-      type="text"
-      data-lesson="${index}"
-      data-field="observerName"
-      placeholder="Prénom de l’observateur"
-      value="${lesson.observerName || ""}"
-      style="margin-top:4px;max-width:220px;width:100%;">
-  </div>
-
-  <div class="scroll-table">
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Muscles sollicités</th>
-          <th>Nom de l'exercice</th>
-          <th class="obs-header">Posture</th>
-          <th class="obs-header">Amplitude</th>
-          <th class="obs-header">Respiration</th>
-          <th class="obs-header">Remarques de l'observateur</th>
-        </tr>
-      </thead>
-      <tbody>
-                ${lesson.exercises.map((exo, exIndex) => `
-  <tr>
-    <td>${exIndex + 1}</td>
-    <td>
-      <input type="text"
-        data-lesson="${index}"
-        data-ex-row="${exIndex}"
-        data-ex-field="muscles"
-        value="${exo.muscles || ""}">
-    </td>
-    <td>
-      <input type="text"
-        data-lesson="${index}"
-        data-ex-row="${exIndex}"
-        data-ex-field="name"
-        value="${exo.name || ""}">
-    </td>
-
-    <!-- POSTURE -->
-    <td class="obs-cell">
-      <div style="display:flex;flex-direction:column;gap:2px;font-size:0.8rem;">
-        <label style="display:flex;align-items:center;gap:4px;">
-          <input
-            type="radio"
-            data-lesson="${index}"
-            data-ex-row="${exIndex}"
-            data-ex-field="posture"
-            name="posture_${index}_${exIndex}"
-            value="OUI"
-            ${exo.posture === "OUI" ? "checked" : ""}>
-          <span>Oui</span>
-        </label>
-        <label style="display:flex;align-items:center;gap:4px;">
-          <input
-            type="radio"
-            data-lesson="${index}"
-            data-ex-row="${exIndex}"
-            data-ex-field="posture"
-            name="posture_${index}_${exIndex}"
-            value="CORRIGER"
-            ${exo.posture === "CORRIGER" ? "checked" : ""}>
-          <span>À corriger</span>
-        </label>
-      </div>
-    </td>
-
-    <!-- AMPLITUDE -->
-    <td class="obs-cell">
-      <div style="display:flex;flex-direction:column;gap:2px;font-size:0.8rem;">
-        <label style="display:flex;align-items:center;gap:4px;">
-          <input
-            type="radio"
-            data-lesson="${index}"
-            data-ex-row="${exIndex}"
-            data-ex-field="amplitude"
-            name="amplitude_${index}_${exIndex}"
-            value="OUI"
-            ${exo.amplitude === "OUI" ? "checked" : ""}>
-          <span>Oui</span>
-        </label>
-        <label style="display:flex;align-items:center;gap:4px;">
-          <input
-            type="radio"
-            data-lesson="${index}"
-            data-ex-row="${exIndex}"
-            data-ex-field="amplitude"
-            name="amplitude_${index}_${exIndex}"
-            value="CORRIGER"
-            ${exo.amplitude === "CORRIGER" ? "checked" : ""}>
-          <span>À corriger</span>
-        </label>
-      </div>
-    </td>
-
-    <!-- RESPIRATION -->
-    <td class="obs-cell">
-      <div style="display:flex;flex-direction:column;gap:2px;font-size:0.8rem;">
-        <label style="display:flex;align-items:center;gap:4px;">
-          <input
-            type="radio"
-            data-lesson="${index}"
-            data-ex-row="${exIndex}"
-            data-ex-field="breathing"
-            name="breathing_${index}_${exIndex}"
-            value="OUI"
-            ${exo.breathing === "OUI" ? "checked" : ""}>
-          <span>Oui</span>
-        </label>
-        <label style="display:flex;align-items:center;gap:4px;">
-          <input
-            type="radio"
-            data-lesson="${index}"
-            data-ex-row="${exIndex}"
-            data-ex-field="breathing"
-            name="breathing_${index}_${exIndex}"
-            value="CORRIGER"
-            ${exo.breathing === "CORRIGER" ? "checked" : ""}>
-          <span>À corriger</span>
-        </label>
-      </div>
-    </td>
-
-    <!-- REMARQUES -->
-    <td class="obs-cell">
-      <input type="text"
-        data-lesson="${index}"
-        data-ex-row="${exIndex}"
-        data-ex-field="remark"
-        placeholder="Ex : à la 8e rép, le mouvement se dégrade"
-        value="${exo.remark || ""}">
-    </td>
-  </tr>
-`).join("")}
-
-              </tbody>
-            </table>
-          </div>
+        <div class="lesson-timer">
+          <button type="button"
+                  class="btn btn-sm"
+                  data-lesson="${index}"
+                  data-timer="start">
+            Commencer la séance
+          </button>
+          <button type="button"
+                  class="btn btn-sm btn-secondary"
+                  data-lesson="${index}"
+                  data-timer="stop">
+            Terminer la séance
+          </button>
+          <span class="muted timer-display" id="timer_${index}">
+            ${formatSeconds(lesson.chronoSeconds || 0)}
+          </span>
         </div>
 
-        <div class="ressenti-block">
+        <p class="muted" style="margin-bottom:4px;">
+          Pour chaque exercice : muscles sollicités, nom de l'exercice et validation par l’observateur
+          (posture, amplitude, respiration).
+        </p>
+
+        <div style="margin-bottom:6px;">
+          <span class="muted" style="font-weight:600;">À remplir par l’observateur :</span>
+          <input
+            type="text"
+            data-lesson="${index}"
+            data-field="observerName"
+            placeholder="Prénom de l’observateur"
+            value="${lesson.observerName || ""}"
+            style="margin-top:4px;max-width:220px;width:100%;">
+        </div>
+
+        <div class="scroll-table">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Muscles sollicités</th>
+                <th>Nom de l'exercice</th>
+                <th class="obs-header">Posture</th>
+                <th class="obs-header">Amplitude</th>
+                <th class="obs-header">Respiration</th>
+                <th class="obs-header">Remarques de l'observateur</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${lesson.exercises.map((exo, exIndex) => `
+                <tr>
+                  <td>${exIndex + 1}</td>
+                  <td>
+                    <input type="text"
+                      data-lesson="${index}"
+                      data-ex-row="${exIndex}"
+                      data-ex-field="muscles"
+                      value="${exo.muscles || ""}">
+                  </td>
+                  <td>
+                    <input type="text"
+                      data-lesson="${index}"
+                      data-ex-row="${exIndex}"
+                      data-ex-field="name"
+                      value="${exo.name || ""}">
+                  </td>
+
+                  <!-- POSTURE -->
+                  <td class="obs-cell">
+                    <div style="display:flex;flex-direction:column;gap:2px;font-size:0.8rem;">
+                      <label style="display:flex;align-items:center;gap:4px;">
+                        <input
+                          type="radio"
+                          data-lesson="${index}"
+                          data-ex-row="${exIndex}"
+                          data-ex-field="posture"
+                          name="posture_${index}_${exIndex}"
+                          value="OUI"
+                          ${exo.posture === "OUI" ? "checked" : ""}>
+                        <span>Oui</span>
+                      </label>
+                      <label style="display:flex;align-items:center;gap:4px;">
+                        <input
+                          type="radio"
+                          data-lesson="${index}"
+                          data-ex-row="${exIndex}"
+                          data-ex-field="posture"
+                          name="posture_${index}_${exIndex}"
+                          value="CORRIGER"
+                          ${exo.posture === "CORRIGER" ? "checked" : ""}>
+                        <span>À corriger</span>
+                      </label>
+                    </div>
+                  </td>
+
+                  <!-- AMPLITUDE -->
+                  <td class="obs-cell">
+                    <div style="display:flex;flex-direction:column;gap:2px;font-size:0.8rem;">
+                      <label style="display:flex;align-items:center;gap:4px;">
+                        <input
+                          type="radio"
+                          data-lesson="${index}"
+                          data-ex-row="${exIndex}"
+                          data-ex-field="amplitude"
+                          name="amplitude_${index}_${exIndex}"
+                          value="OUI"
+                          ${exo.amplitude === "OUI" ? "checked" : ""}>
+                        <span>Oui</span>
+                      </label>
+                      <label style="display:flex;align-items:center;gap:4px;">
+                        <input
+                          type="radio"
+                          data-lesson="${index}"
+                          data-ex-row="${exIndex}"
+                          data-ex-field="amplitude"
+                          name="amplitude_${index}_${exIndex}"
+                          value="CORRIGER"
+                          ${exo.amplitude === "CORRIGER" ? "checked" : ""}>
+                        <span>À corriger</span>
+                      </label>
+                    </div>
+                  </td>
+
+                  <!-- RESPIRATION -->
+                  <td class="obs-cell">
+                    <div style="display:flex;flex-direction:column;gap:2px;font-size:0.8rem;">
+                      <label style="display:flex;align-items:center;gap:4px;">
+                        <input
+                          type="radio"
+                          data-lesson="${index}"
+                          data-ex-row="${exIndex}"
+                          data-ex-field="breathing"
+                          name="breathing_${index}_${exIndex}"
+                          value="OUI"
+                          ${exo.breathing === "OUI" ? "checked" : ""}>
+                        <span>Oui</span>
+                      </label>
+                      <label style="display:flex;align-items:center;gap:4px;">
+                        <input
+                          type="radio"
+                          data-lesson="${index}"
+                          data-ex-row="${exIndex}"
+                          data-ex-field="breathing"
+                          name="breathing_${index}_${exIndex}"
+                          value="CORRIGER"
+                          ${exo.breathing === "CORRIGER" ? "checked" : ""}>
+                        <span>À corriger</span>
+                      </label>
+                    </div>
+                  </td>
+
+                  <!-- REMARQUES -->
+                  <td class="obs-cell">
+                    <input type="text"
+                      data-lesson="${index}"
+                      data-ex-row="${exIndex}"
+                      data-ex-field="remark"
+                      placeholder="Ex : à la 8e rép, le mouvement se dégrade"
+                      value="${exo.remark || ""}">
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ressenti-block" style="margin-top:10px;">
           <label>Échelle de ressenti – je me situe pour chaque ligne :</label>
           <div class="scroll-table">
             <table class="scale-table">
@@ -3478,59 +3974,862 @@ details.appendChild(summary);
           </div>
         </div>
 
-        <div class="lesson-validation-block">
-  <div>
-    <label>Bilan de la leçon</label>
-    <textarea
-      class="important-field"
-      data-lesson="${index}"
-      data-field="bilan"
-      placeholder="Ce qui a bien fonctionné, ce qui est à modifier, idées pour la prochaine séance…">${lesson.bilan || ""}</textarea>
-  </div>
+        <div class="lesson-validation-block" style="margin-top:10px;">
+          <div>
+            <label>Bilan de la leçon</label>
+            <textarea
+              class="important-field"
+              data-lesson="${index}"
+              data-field="bilan"
+              placeholder="Ce qui a bien fonctionné, ce qui est à modifier, idées pour la prochaine séance…">${lesson.bilan || ""}</textarea>
+          </div>
 
-  <div style="display:flex;align-items:center;gap:8px;">
-    <input
-      type="checkbox"
-      id="validate_${index}"
-      data-lesson="${index}"
-      data-field="validated"
-      ${lesson.validated ? "checked" : ""}
-      style="transform:scale(1.1);">
-    <label for="validate_${index}">
-      Je valide / j’enregistre ma leçon ✅
-    </label>
-  </div>
-</div>
-
+          <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+            <input
+              type="checkbox"
+              id="validate_${index}"
+              data-lesson="${index}"
+              data-field="validated"
+              ${lesson.validated ? "checked" : ""}
+              style="transform:scale(1.1);">
+            <label for="validate_${index}">
+              Je valide / j’enregistre ma leçon ✅
+            </label>
+          </div>
+        </div>
       `;
-      details.appendChild(body);
-      lessonsContainerEl.appendChild(details);
-    });
+    }
 
-    lessonsContainerEl.querySelectorAll("input[data-field], textarea[data-field], select[data-field]")
-      .forEach(el => {
-        el.addEventListener("change", onLessonFieldChange);
-        el.addEventListener("input", onLessonFieldChange);
-      });
+    /* ------------------ LEÇON 3 : FORMAT SPÉCIAL 5 ÉTAPES ------------------ */
+    else if (index === 2) {
+      body.innerHTML = `
+      <div class="section-title">Leçon 3 – Séance en 5 étapes</div>
 
-    lessonsContainerEl.querySelectorAll("input[data-ex-row], select[data-ex-row]")
-      .forEach(el => {
-        el.addEventListener("change", onLessonExerciseChange);
-        el.addEventListener("input", onLessonExerciseChange);
-      });
-      // Boutons de chrono
-lessonsContainerEl.querySelectorAll("[data-timer='start']").forEach(btn => {
-  btn.addEventListener("click", onTimerStart);
-});
-lessonsContainerEl.querySelectorAll("[data-timer='stop']").forEach(btn => {
-  btn.addEventListener("click", onTimerStop);
-});
+      <!-- Étape 1 : Testing FMS Deep Squat -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-chip">Étape 1</span>
+          <h3>Testing – FMS : Deep squat</h3>
+        </div>
 
-// Mise à jour visuelle initiale des timers
-student.carnet.lessons.forEach((_, idx) => updateTimerDisplayFor(idx));
+        <p class="muted">
+          Test pour évaluer ta <strong>mobilité</strong> et ta <strong>stabilité</strong>
+          au niveau des hanches, chevilles et épaules. Place-toi pieds largeur d’épaules,
+          bâton au-dessus de la tête, puis réalise un squat le plus bas possible.
+        </p>
+
+        <div class="scroll-table" style="margin-top:6px;">
+          <table class="scale-table">
+            <thead>
+              <tr>
+                <th>Critères à respecter</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Genoux alignés avec les pieds</td></tr>
+              <tr><td>Les talons ne se décollent pas</td></tr>
+              <tr><td>Bas du dos en position neutre</td></tr>
+              <tr><td>Projection du bâton dans l’axe du corps</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top:8px;">
+          <label>Niveau obtenu au test Deep squat</label>
+          <div class="fms-level-grid">
+            <label class="fms-level fms1">
+              <input type="radio"
+                     name="fmsDeepSquat_${index}"
+                     value="1"
+                     data-lesson="${index}"
+                     data-field="fmsDeepSquatLevel"
+                     ${lesson.fmsDeepSquatLevel === "1" ? "checked" : ""}>
+              <span>
+                Niveau 1<br>
+                <small>Critères non respectés</small>
+              </span>
+            </label>
+
+            <label class="fms-level fms2">
+              <input type="radio"
+                     name="fmsDeepSquat_${index}"
+                     value="2"
+                     data-lesson="${index}"
+                     data-field="fmsDeepSquatLevel"
+                     ${lesson.fmsDeepSquatLevel === "2" ? "checked" : ""}>
+              <span>
+                Niveau 2<br>
+                <small>Critères respectés avec compensations</small>
+              </span>
+            </label>
+
+            <label class="fms-level fms3">
+              <input type="radio"
+                     name="fmsDeepSquat_${index}"
+                     value="3"
+                     data-lesson="${index}"
+                     data-field="fmsDeepSquatLevel"
+                     ${lesson.fmsDeepSquatLevel === "3" ? "checked" : ""}>
+              <span>
+                Niveau 3<br>
+                <small>Tous les critères respectés</small>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div style="margin-top:6px;">
+          <label>Remarques / axes de progrès</label>
+          <textarea
+            data-lesson="${index}"
+            data-field="fmsDeepSquatNotes"
+            placeholder="Ex : manque de mobilité de cheville, penser à garder les talons au sol…"
+          >${lesson.fmsDeepSquatNotes || ""}</textarea>
+        </div>
+      </div>
+
+      <!-- Étape 2 : Warm up -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-chip">Étape 2</span>
+          <h3>Warm up</h3>
+        </div>
+        <p class="muted">Échauffement complet : Mobilités, Stabilités, Activations globales.</p>
+        <textarea
+          data-lesson="${index}"
+          data-field="step2Warmup"
+          placeholder="Décris ton échauffement : exercices, durée, consignes.">${lesson.step2Warmup || lesson.warmup || ""}</textarea>
+      </div>
+
+      <!-- Étape 3 : Chaîne de progression du back squat -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-chip">Étape 3</span>
+          <h3>Les chaînes de progression – Back squat</h3>
+        </div>
+
+        <p class="muted">
+          Choisis le niveau que tu valides dans la chaîne de progression du back squat.
+          Plus le numéro est grand, plus l’exercice est exigeant techniquement et
+          musculairement.
+        </p>
+
+        <div class="squat-progression">
+          <div class="squat-arrow-caption muted">
+            Du <strong>plus facile</strong> ➜ vers <strong>plus difficile</strong>
+          </div>
+
+          <div class="squat-steps">
+            <button type="button"
+                    class="squat-step ${lesson.squatProgressionLevel === "1" ? "active" : ""}"
+                    data-lesson="${index}"
+                    data-squat-level="1">
+              <span class="squat-number">1</span>
+              <span class="squat-label">Air squat</span>
+            </button>
+
+            <button type="button"
+                    class="squat-step ${lesson.squatProgressionLevel === "2" ? "active" : ""}"
+                    data-lesson="${index}"
+                    data-squat-level="2">
+              <span class="squat-number">2</span>
+              <span class="squat-label">Goblet squat</span>
+            </button>
+
+            <button type="button"
+                    class="squat-step ${lesson.squatProgressionLevel === "3" ? "active" : ""}"
+                    data-lesson="${index}"
+                    data-squat-level="3">
+              <span class="squat-number">3</span>
+              <span class="squat-label">Unilatéral squat</span>
+            </button>
+
+            <button type="button"
+                    class="squat-step ${lesson.squatProgressionLevel === "4" ? "active" : ""}"
+                    data-lesson="${index}"
+                    data-squat-level="4">
+              <span class="squat-number">4</span>
+              <span class="squat-label">Rack</span>
+            </button>
+
+            <button type="button"
+                    class="squat-step ${lesson.squatProgressionLevel === "5" ? "active" : ""}"
+                    data-lesson="${index}"
+                    data-squat-level="5">
+              <span class="squat-number">5</span>
+              <span class="squat-label">Back squat</span>
+            </button>
+          </div>
+        </div>
+
+        <div style="margin-top:8px;">
+          <label>Remarques / explication de ton niveau</label>
+          <textarea
+            data-lesson="${index}"
+            data-field="squatProgressionNotes"
+            placeholder="Ex : je m’arrête au niveau 2, je dois encore gagner en stabilité du tronc et en mobilité de chevilles.">${lesson.squatProgressionNotes || ""}</textarea>
+        </div>
+      </div>
 
       
-  }
+                <!-- Étape 4 : Montée en charge & observation du squat -->
+          <div class="step-card">
+            <div class="step-header">
+              <span class="step-chip">Étape 4</span>
+              <h3>Montée en charge & observation du squat</h3>
+            </div>
+
+            <p class="muted">
+              Réalise ton squat (niveau validé dans la chaîne de progression) sur <strong>10 répétitions</strong>.
+              L’observateur coche un drapeau <strong>vert ✅</strong> ou <strong>rouge ❌</strong> pour chaque critère.
+            </p>
+
+            <!-- Bouton pour afficher / cacher le schéma -->
+            <button type="button"
+                    class="btn btn-sm btn-secondary"
+                    data-lesson="${index}"
+                    data-obs="toggleSchema">
+              Commencer l’observation
+            </button>
+
+            <!-- Schéma + critères (initialement masqués) -->
+            <div id="obsSchema_${index}" class="obs-schema" style="display:none;">
+              <!-- Ton image schéma ici -->
+              <img src="schema-observation-squat.png"
+                   alt="Schéma d’observation du squat (dos, équilibre, talons, amplitude, genoux)">
+
+              <div class="obs-criteria-grid">
+                <!-- DOS -->
+                <div class="obs-criterion">
+                  <div class="obs-criterion-label">Dos : fixé / arrondi</div>
+                  <div class="flag-options">
+                    <label class="flag-option flag-green">
+                      <input type="radio"
+                             name="obs_dos_${index}"
+                             value="OK"
+                             data-lesson="${index}"
+                             data-field="obsDos">
+                      <span>✅</span>
+                    </label>
+                    <label class="flag-option flag-red">
+                      <input type="radio"
+                             name="obs_dos_${index}"
+                             value="KO"
+                             data-lesson="${index}"
+                             data-field="obsDos">
+                      <span>❌</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- EQUILIBRE -->
+                <div class="obs-criterion">
+                  <div class="obs-criterion-label">Équilibre : stable / instable</div>
+                  <div class="flag-options">
+                    <label class="flag-option flag-green">
+                      <input type="radio"
+                             name="obs_equilibre_${index}"
+                             value="OK"
+                             data-lesson="${index}"
+                             data-field="obsEquilibre">
+                      <span>✅</span>
+                    </label>
+                    <label class="flag-option flag-red">
+                      <input type="radio"
+                             name="obs_equilibre_${index}"
+                             value="KO"
+                             data-lesson="${index}"
+                             data-field="obsEquilibre">
+                      <span>❌</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- TALONS -->
+                <div class="obs-criterion">
+                  <div class="obs-criterion-label">Talons : ancrés / se décollent</div>
+                  <div class="flag-options">
+                    <label class="flag-option flag-green">
+                      <input type="radio"
+                             name="obs_talons_${index}"
+                             value="OK"
+                             data-lesson="${index}"
+                             data-field="obsTalons">
+                      <span>✅</span>
+                    </label>
+                    <label class="flag-option flag-red">
+                      <input type="radio"
+                             name="obs_talons_${index}"
+                             value="KO"
+                             data-lesson="${index}"
+                             data-field="obsTalons">
+                      <span>❌</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- AMPLITUDE -->
+                <div class="obs-criterion">
+                  <div class="obs-criterion-label">Amplitude : complète / partielle</div>
+                  <div class="flag-options">
+                    <label class="flag-option flag-green">
+                      <input type="radio"
+                             name="obs_amplitude_${index}"
+                             value="OK"
+                             data-lesson="${index}"
+                             data-field="obsAmplitude">
+                      <span>✅</span>
+                    </label>
+                    <label class="flag-option flag-red">
+                      <input type="radio"
+                             name="obs_amplitude_${index}"
+                             value="KO"
+                             data-lesson="${index}"
+                             data-field="obsAmplitude">
+                      <span>❌</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- GENOUX -->
+                <div class="obs-criterion">
+                  <div class="obs-criterion-label">Genoux : restent alignés / rentrent</div>
+                  <div class="flag-options">
+                    <label class="flag-option flag-green">
+                      <input type="radio"
+                             name="obs_genoux_${index}"
+                             value="OK"
+                             data-lesson="${index}"
+                             data-field="obsGenoux">
+                      <span>✅</span>
+                    </label>
+                    <label class="flag-option flag-red">
+                      <input type="radio"
+                             name="obs_genoux_${index}"
+                             value="KO"
+                             data-lesson="${index}"
+                             data-field="obsGenoux">
+                      <span>❌</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Résumé + exos à travailler -->
+              <div id="obsSummary_${index}" class="muted" style="margin-top:8px;">
+                Complète les drapeaux pour afficher le bilan.
+              </div>
+              <div id="obsAxisExos_${index}" style="margin-top:4px;"></div>
+
+              <!-- Bouton pour calculer les axes + exos -->
+              <button type="button"
+                      class="btn btn-sm"
+                      data-lesson="${index}"
+                      data-obs="showResult"
+                      style="margin-top:6px;">
+                Voir les axes à travailler et les exercices
+              </button>
+            </div>
+
+            <!-- RER -->
+            <div style="margin-top:8px;">
+              <label>Ton RER (répétitions en réserve) sur ce squat</label>
+              <input type="number"
+                     min="0"
+                     max="10"
+                     data-lesson="${index}"
+                     data-field="rerSquat"
+                     placeholder="Ex : 2 (il restait 2 répétitions possibles)"
+                     value="${lesson.rerSquat || ""}">
+              <p class="muted" style="margin-top:2px;">
+                RER = nombre de répétitions que tu aurais encore pu faire à la fin de ta série.
+              </p>
+            </div>
+          </div>
+
+
+      <!-- Étape 5 : Le finish -->
+<div class="step-card">
+  <div class="step-header">
+    <span class="step-chip">Étape 5</span>
+    <h3>Le finish</h3>
+  </div>
+
+  <p class="muted">
+    Dernière partie de la séance : cardio final, challenge ou retour au calme.
+  </p>
+
+  <!-- CADRE : Membres du groupe -->
+  <div style="
+    margin-top:10px;
+    padding:10px;
+    border-radius:10px;
+    background:#f3f4f6;
+    border:1px solid #d1d5db;">
+    <label style="font-weight:600;">Membres du groupe (3 élèves)</label>
+    <textarea
+      data-lesson="${index}"
+      data-field="groupMembers"
+      placeholder="Ex : Léo, Amine, Sarah"
+      style="margin-top:6px; width:100%; min-height:50px;">${lesson.groupMembers || ""}</textarea>
+  </div>
+
+  <!-- COMPTEUR DE TOURS -->
+  <div style="
+    margin-top:12px;
+    padding:10px;
+    border-radius:10px;
+    background:#e8f0ff;
+    border:1px solid #bcd0ff;
+    text-align:center;">
+    
+    <label style="font-weight:600;">Nombre de tours réalisés par le groupe</label>
+
+    <div style="margin-top:8px; font-size:1.4rem; font-weight:700;">
+      <span id="roundCounter_${index}">
+        ${lesson.finishRounds || 0}
+      </span>
+      &nbsp;🏁
+    </div>
+
+    <div style="display:flex; gap:8px; justify-content:center; margin-top:8px;">
+      <button
+        type="button"
+        class="btn btn-sm"
+        data-round-action="plus"
+        data-lesson="${index}">
+        +1 tour
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-sm btn-secondary"
+        data-round-action="minus"
+        data-lesson="${index}">
+        -1 tour
+      </button>
+    </div>
+  </div>
+
+  <!-- Zone bilan du finish -->
+  <textarea
+    data-lesson="${index}"
+    data-field="step5Finish"
+    placeholder="Ex : circuit cardio, challenge de répétitions, retour au calme, étirements."
+    style="margin-top:12px;">${lesson.step5Finish || ""}</textarea>
+</div>
+
+      <!-- Programme + observateur + ressenti + bilan (comme d’habitude) -->
+      <div style="margin-top:12px;">
+        <div class="section-title">Programme de la leçon</div>
+
+        <div class="lesson-timer">
+          <button type="button"
+                  class="btn btn-sm"
+                  data-lesson="${index}"
+                  data-timer="start">
+            Commencer la séance
+          </button>
+          <button type="button"
+                  class="btn btn-sm btn-secondary"
+                  data-lesson="${index}"
+                  data-timer="stop">
+            Terminer la séance
+          </button>
+          <span class="muted timer-display" id="timer_${index}">
+            ${formatSeconds(lesson.chronoSeconds || 0)}
+          </span>
+        </div>
+
+        <p class="muted" style="margin-bottom:4px;">
+          Pour chaque exercice : muscles sollicités, nom de l'exercice et validation par l’observateur
+          (posture, amplitude, respiration).
+        </p>
+
+        <div style="margin-bottom:6px;">
+          <span class="muted" style="font-weight:600;">À remplir par l’observateur :</span>
+          <input
+            type="text"
+            data-lesson="${index}"
+            data-field="observerName"
+            placeholder="Prénom de l’observateur"
+            value="${lesson.observerName || ""}"
+            style="margin-top:4px;max-width:220px;width:100%;">
+        </div>
+
+        <div class="scroll-table">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Muscles sollicités</th>
+                <th>Nom de l'exercice</th>
+                <th class="obs-header">Posture</th>
+                <th class="obs-header">Amplitude</th>
+                <th class="obs-header">Respiration</th>
+                <th class="obs-header">Remarques de l'observateur</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${lesson.exercises.map((exo, exIndex) => `
+                <tr>
+                  <td>${exIndex + 1}</td>
+                  <td>
+                    <input type="text"
+                      data-lesson="${index}"
+                      data-ex-row="${exIndex}"
+                      data-ex-field="muscles"
+                      value="${exo.muscles || ""}">
+                  </td>
+                  <td>
+                    <input type="text"
+                      data-lesson="${index}"
+                      data-ex-row="${exIndex}"
+                      data-ex-field="name"
+                      value="${exo.name || ""}">
+                  </td>
+
+                  <td class="obs-cell">
+                    <div style="display:flex;flex-direction:column;gap:2px;font-size:0.8rem;">
+                      <label style="display:flex;align-items:center;gap:4px;">
+                        <input
+                          type="radio"
+                          data-lesson="${index}"
+                          data-ex-row="${exIndex}"
+                          data-ex-field="posture"
+                          name="posture_${index}_${exIndex}"
+                          value="OUI"
+                          ${exo.posture === "OUI" ? "checked" : ""}>
+                        <span>Oui</span>
+                      </label>
+                      <label style="display:flex;align-items:center;gap:4px;">
+                        <input
+                          type="radio"
+                          data-lesson="${index}"
+                          data-ex-row="${exIndex}"
+                          data-ex-field="posture"
+                          name="posture_${index}_${exIndex}"
+                          value="CORRIGER"
+                          ${exo.posture === "CORRIGER" ? "checked" : ""}>
+                        <span>À corriger</span>
+                      </label>
+                    </div>
+                  </td>
+
+                  <td class="obs-cell">
+                    <div style="display:flex;flex-direction:column;gap:2px;font-size:0.8rem;">
+                      <label style="display:flex;align-items:center;gap:4px;">
+                        <input
+                          type="radio"
+                          data-lesson="${index}"
+                          data-ex-row="${exIndex}"
+                          data-ex-field="amplitude"
+                          name="amplitude_${index}_${exIndex}"
+                          value="OUI"
+                          ${exo.amplitude === "OUI" ? "checked" : ""}>
+                        <span>Oui</span>
+                      </label>
+                      <label style="display:flex;align-items:center;gap:4px;">
+                        <input
+                          type="radio"
+                          data-lesson="${index}"
+                          data-ex-row="${exIndex}"
+                          data-ex-field="amplitude"
+                          name="amplitude_${index}_${exIndex}"
+                          value="CORRIGER"
+                          ${exo.amplitude === "CORRIGER" ? "checked" : ""}>
+                        <span>À corriger</span>
+                      </label>
+                    </div>
+                  </td>
+
+                  <td class="obs-cell">
+                    <div style="display:flex;flex-direction:column;gap:2px;font-size:0.8rem;">
+                      <label style="display:flex;align-items:center;gap:4px;">
+                        <input
+                          type="radio"
+                          data-lesson="${index}"
+                          data-ex-row="${exIndex}"
+                          data-ex-field="breathing"
+                          name="breathing_${index}_${exIndex}"
+                          value="OUI"
+                          ${exo.breathing === "OUI" ? "checked" : ""}>
+                        <span>Oui</span>
+                      </label>
+                      <label style="display:flex;align-items:center;gap:4px;">
+                        <input
+                          type="radio"
+                          data-lesson="${index}"
+                          data-ex-row="${exIndex}"
+                          data-ex-field="breathing"
+                          name="breathing_${index}_${exIndex}"
+                          value="CORRIGER"
+                          ${exo.breathing === "CORRIGER" ? "checked" : ""}>
+                        <span>À corriger</span>
+                      </label>
+                    </div>
+                  </td>
+
+                  <td class="obs-cell">
+                    <input type="text"
+                      data-lesson="${index}"
+                      data-ex-row="${exIndex}"
+                      data-ex-field="remark"
+                      placeholder="Ex : à la 8e rép, le mouvement se dégrade"
+                      value="${exo.remark || ""}">
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="ressenti-block" style="margin-top:10px;">
+        <label>Échelle de ressenti – je me situe pour chaque ligne :</label>
+        <div class="scroll-table">
+          <table class="scale-table">
+            <thead>
+            <tr>
+              <th>Critère</th>
+              <th class="res1 center">Niveau 1</th>
+              <th class="res2 center">Niveau 2</th>
+              <th class="res3 center">Niveau 3</th>
+              <th class="res4 center">Niveau 4</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>Perception de l’effort</td>
+              ${[1,2,3,4].map(n => `
+                <td class="res${n} center">
+                  <input type="radio"
+                         name="effort_${index}"
+                         data-lesson="${index}"
+                         data-field="effortLevel"
+                         value="${n}" ${lesson.effortLevel === String(n) ? "checked" : ""}>
+                </td>`).join("")}
+            </tr>
+            <tr>
+              <td>Sensations musculaires</td>
+              ${[1,2,3,4].map(n => `
+                <td class="res${n} center">
+                  <input type="radio"
+                         name="muscles_${index}"
+                         data-lesson="${index}"
+                         data-field="musclesLevel"
+                         value="${n}" ${lesson.musclesLevel === String(n) ? "checked" : ""}>
+                </td>`).join("")}
+            </tr>
+            <tr>
+              <td>Sensations respiratoires</td>
+              ${[1,2,3,4].map(n => `
+                <td class="res${n} center">
+                  <input type="radio"
+                         name="breath_${index}"
+                         data-lesson="${index}"
+                         data-field="breathLevel"
+                         value="${n}" ${lesson.breathLevel === String(n) ? "checked" : ""}>
+                </td>`).join("")}
+            </tr>
+            <tr>
+              <td>Sensation de chaleur</td>
+              ${[1,2,3,4].map(n => `
+                <td class="res${n} center">
+                  <input type="radio"
+                         name="heat_${index}"
+                         data-lesson="${index}"
+                         data-field="heatLevel"
+                         value="${n}" ${lesson.heatLevel === String(n) ? "checked" : ""}>
+                </td>`).join("")}
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="lesson-validation-block" style="margin-top:10px;">
+        <div>
+          <label>Bilan de la leçon</label>
+          <textarea
+            class="important-field"
+            data-lesson="${index}"
+            data-field="bilan"
+            placeholder="Ce qui a bien fonctionné, ce qui est à modifier, idées pour la prochaine séance…">${lesson.bilan || ""}</textarea>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+          <input
+            type="checkbox"
+            id="validate_${index}"
+            data-lesson="${index}"
+            data-field="validated"
+            ${lesson.validated ? "checked" : ""}
+            style="transform:scale(1.1);">
+          <label for="validate_${index}">
+            Je valide / j’enregistre ma leçon ✅
+          </label>
+        </div>
+      </div>
+      `;
+    }
+
+    
+
+    /* ------------------ LEÇONS 4 À 8 : RIEN POUR LE MOMENT ------------------ */
+    else {
+      body.innerHTML = `
+        <p class="muted">Leçon ${lesson.number} : contenu à venir.</p>
+      `;
+    }
+
+    details.appendChild(body);
+    lessonsContainerEl.appendChild(details);
+  });
+
+  // Listeners généraux (communs à toutes les leçons)
+  lessonsContainerEl
+    .querySelectorAll("input[data-field], textarea[data-field], select[data-field]")
+    .forEach(el => {
+      el.addEventListener("change", onLessonFieldChange);
+      el.addEventListener("input", onLessonFieldChange);
+    });
+
+  lessonsContainerEl
+    .querySelectorAll("input[data-ex-row], select[data-ex-row]")
+    .forEach(el => {
+      el.addEventListener("change", onLessonExerciseChange);
+      el.addEventListener("input", onLessonExerciseChange);
+    });
+
+  // Clic sur les niveaux de la chaîne de progression (back squat – leçon 3)
+    // Clic sur les niveaux de la chaîne de progression (back squat – leçon 3)
+  lessonsContainerEl.querySelectorAll(".squat-step").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const lessonIndex = parseInt(btn.dataset.lesson, 10);
+      const level = btn.dataset.squatLevel;
+      const student = getSelectedStudent();
+      if (!student || !student.carnet || !student.carnet.lessons[lessonIndex]) return;
+
+      const lesson = student.carnet.lessons[lessonIndex];
+      // on enregistre le niveau choisi
+      lesson.squatProgressionLevel = level;
+      saveData();
+
+      // Mise à jour visuelle : un seul niveau actif pour cette leçon
+      lessonsContainerEl
+        .querySelectorAll(`.squat-step[data-lesson="${lessonIndex}"]`)
+        .forEach(b => {
+          b.classList.toggle("active", b.dataset.squatLevel === level);
+        });
+    });
+  });
+
+  // COMPTEUR DE TOURS – Étape 5
+  lessonsContainerEl.querySelectorAll("[data-round-action]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const student = getSelectedStudent();
+      if (!student || !student.carnet) return;
+
+      const lessonIndex = parseInt(btn.dataset.lesson, 10);
+      const lesson = student.carnet.lessons[lessonIndex];
+      if (!lesson) return;
+
+      // valeur par défaut
+      if (typeof lesson.finishRounds !== "number") {
+        lesson.finishRounds = Number(lesson.finishRounds) || 0;
+      }
+
+      const action = btn.dataset.roundAction;
+      if (action === "plus") lesson.finishRounds++;
+      if (action === "minus" && lesson.finishRounds > 0) lesson.finishRounds--;
+
+      // Mise à jour visuelle du compteur
+      const counterEl = document.getElementById(`roundCounter_${lessonIndex}`);
+      if (counterEl) counterEl.textContent = lesson.finishRounds;
+
+      saveData();
+    });
+  });
+
+  // Boutons de chrono
+  lessonsContainerEl.querySelectorAll("[data-timer='start']").forEach(btn => {
+    btn.addEventListener("click", onTimerStart);
+  });
+  lessonsContainerEl.querySelectorAll("[data-timer='stop']").forEach(btn => {
+    btn.addEventListener("click", onTimerStop);
+  });
+
+  // Mise à jour visuelle initiale des timers
+  student.carnet.lessons.forEach((_, idx) => updateTimerDisplayFor(idx));
+}
+  // Bouton "Commencer l'observation" (affiche / cache la grille Étape 4)
+  lessonsContainerEl.querySelectorAll("[data-obs='toggleSchema']").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const lessonIndex = parseInt(btn.dataset.lesson, 10);
+      const schema = document.getElementById(`obsSchema_${lessonIndex}`);
+      if (!schema) return;
+
+      const isHidden = (schema.style.display === "" || schema.style.display === "none");
+      schema.style.display = isHidden ? "block" : "none";
+    });
+  });
+
+  // Bouton "Voir les axes à travailler et les exercices"
+  lessonsContainerEl.querySelectorAll("[data-obs='showResult']").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const lessonIndex = parseInt(btn.dataset.lesson, 10);
+      updateStep4Summary(lessonIndex);
+    });
+  });
+
+  // Bouton "Commencer l'observation" (affiche / cache la grille)
+  lessonsContainerEl.querySelectorAll(".step4-toggle").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const idx = btn.dataset.lesson;
+      const content = document.getElementById(`step4Content_${idx}`);
+      if (!content) return;
+      const visible = content.style.display !== "none";
+      content.style.display = visible ? "none" : "block";
+
+      // Met à jour le résumé quand on ouvre pour la leçon 3
+      const lessonIndex = parseInt(idx, 10);
+      if (!visible && lessonIndex === 2) {
+        updateStep4Summary(lessonIndex);
+      }
+    });
+  });
+
+  // Clic sur les drapeaux verts / rouges
+  lessonsContainerEl.querySelectorAll("[data-step4-crit]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const lessonIndex = parseInt(btn.dataset.lesson, 10);
+      const crit = btn.dataset.step4Crit;   // "dos", "equilibre", ...
+      const flag = btn.dataset.flag;        // "GREEN" ou "RED"
+
+      const student = getSelectedStudent();
+      if (!student || !student.carnet || !student.carnet.lessons[lessonIndex]) return;
+      const lesson = student.carnet.lessons[lessonIndex];
+
+      const prop = "step4" + crit.charAt(0).toUpperCase() + crit.slice(1);
+      lesson[prop] = flag;
+      saveData();
+
+      // Visuel : un seul drapeau actif par critère
+      lessonsContainerEl
+        .querySelectorAll(`[data-lesson="${lessonIndex}"][data-step4-crit="${crit}"]`)
+        .forEach(b => {
+          b.classList.toggle("active", b.dataset.flag === flag);
+        });
+
+      if (lessonIndex === 2) {
+        updateStep4Summary(lessonIndex);
+      }
+    });
+  });
+
+  // Mise à jour initiale du résumé pour la leçon 3
+  updateStep4Summary(2);
 
  function onLessonFieldChange(e) {
   const student = getSelectedStudent();
@@ -3575,6 +4874,9 @@ student.carnet.lessons.forEach((_, idx) => updateTimerDisplayFor(idx));
       valueEl.textContent = `Niveau : ${level}/10`;
     }
   }
+    if (field === "step4Rer" && lessonIndex === 2) {
+    updateStep4Summary(lessonIndex);
+  }
 }
 
   function onLessonExerciseChange(e) {
@@ -3589,6 +4891,107 @@ student.carnet.lessons.forEach((_, idx) => updateTimerDisplayFor(idx));
     lesson.exercises[rowIndex][field] = e.target.value;
     saveData();
   }
+// --- Étape 4 : calcul du résultat d'observation + axes + exercices ---
+function computeObservationAxes(lessonIndex) {
+  const student = getSelectedStudent();
+  if (!student || !student.carnet || !student.carnet.lessons[lessonIndex]) return;
+
+  const lesson = student.carnet.lessons[lessonIndex];
+
+  // Récupérer les choix OK / KO pour chaque critère
+  const getValue = (nameBase) => {
+    const input = document.querySelector(`input[name="${nameBase}_${lessonIndex}"]:checked`);
+    return input ? input.value : null;
+  };
+
+  const criteria = [
+    { key: "dos",       name: "obs_dos",       axis: "C", label: "Dos" },
+    { key: "equilibre", name: "obs_equilibre", axis: "B", label: "Équilibre" },
+    { key: "talons",    name: "obs_talons",    axis: "C", label: "Talons" },
+    { key: "genoux",    name: "obs_genoux",    axis: "A", label: "Genoux" },
+    { key: "amplitude", name: "obs_amplitude", axis: "C", label: "Amplitude" }
+  ];
+
+  let verts = 0;
+  let rouges = 0;
+  const axesSet = new Set();
+
+  criteria.forEach(c => {
+    const val = getValue(c.name);
+    if (!val) return;
+    lesson[`obs${c.key.charAt(0).toUpperCase()}${c.key.slice(1)}`] = val;
+
+    if (val === "OK") {
+      verts++;
+    } else if (val === "KO") {
+      rouges++;
+      axesSet.add(c.axis);
+    }
+  });
+
+  lesson.obsResult = {
+    verts,
+    rouges,
+    axes: Array.from(axesSet)
+  };
+  saveData();
+
+  const summaryEl = document.getElementById(`obsSummary_${lessonIndex}`);
+  const axisExosEl = document.getElementById(`obsAxisExos_${lessonIndex}`);
+  if (!summaryEl || !axisExosEl) return;
+
+  if (!verts && !rouges) {
+    summaryEl.textContent = "Complète d'abord l'observation (drapeaux verts / rouges).";
+    axisExosEl.innerHTML = "";
+    return;
+  }
+
+  // Texte récapitulatif
+  summaryEl.innerHTML = `
+    <strong>Bilan :</strong> ${verts} drapeau(x) vert(s) – ${rouges} drapeau(x) rouge(s).<br>
+    Axes prioritaires à travailler : ${
+      lesson.obsResult.axes.length
+        ? lesson.obsResult.axes.map(a => `(${a}) ${AXIS_EXERCISES[a].label.split(") ")[1]}`).join(", ")
+        : "aucun axe particulier – poursuis au niveau actuel."
+    }
+  `;
+
+  // Affichage des exercices conseillés
+  if (!lesson.obsResult.axes.length) {
+    axisExosEl.innerHTML = "";
+    return;
+  }
+
+  axisExosEl.innerHTML = lesson.obsResult.axes.map(axis => {
+    const info = AXIS_EXERCISES[axis];
+    if (!info) return "";
+    return `
+      <div class="step-card" style="margin-top:6px;">
+        <div class="step-header">
+          <span class="step-chip">${info.label}</span>
+        </div>
+        <p class="muted" style="margin-bottom:4px;">${info.description}</p>
+        <ul class="muted" style="padding-left:18px;margin:0;">
+          ${info.exercises.map(ex => `<li>${ex}</li>`).join("")}
+        </ul>
+      </div>
+    `;
+  }).join("");
+}
+
+document.addEventListener("click", (e) => {
+  if (e.target.matches("[data-obs='toggleSchema']")) {
+    const lessonIndex = parseInt(e.target.dataset.lesson, 10);
+    if (isNaN(lessonIndex)) return;
+    const box = document.getElementById(`obsSchema_${lessonIndex}`);
+    if (!box) return;
+
+    // On alterne visible / caché
+    box.style.display = (box.style.display === "none" || box.style.display === "")
+      ? "block"
+      : "none";
+  }
+});
 
   /* ----- Auto-évaluation ----- */
 
@@ -3672,7 +5075,10 @@ student.carnet.lessons.forEach((_, idx) => updateTimerDisplayFor(idx));
 
   btnAddClass.addEventListener("click", addClass);
   btnDeleteClass.addEventListener("click", deleteClass);
-  btnConfigTeams.addEventListener("click", goToStudentsView);
+  if (goToStudentsText) {
+  goToStudentsText.addEventListener("click", goToStudentsView);
+}
+
 
   btnAddStudent.addEventListener("click", addStudent);
   newStudentNameEl.addEventListener("keydown", (e) => {
