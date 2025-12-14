@@ -4919,7 +4919,7 @@ function computeObservationAxes(lessonIndex) {
   criteria.forEach(c => {
     const val = getValue(c.name);
     if (!val) return;
-    lesson[`obs${c.key.charAt(0).toUpperCase()}${c.key.slice(1)}`] = val;
+    lesson[`obs${c.key.charAt(0).toUpperCase()}${c.key.slice()}`] = val;
 
     if (val === "OK") {
       verts++;
