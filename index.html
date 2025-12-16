@@ -1490,59 +1490,131 @@ img{
     transform:scale(1.2);
   }
 }
-/* ✅ MOBILE : Échelle de ressenti sans scroll horizontal */
-@media (max-width: 520px) {
 
-  /* on enlève le scroll horizontal uniquement sur ce bloc */
-  .ressenti-block .scroll-table{
-    overflow-x: visible !important;
-  }
+/* ===== Table ressenti responsive (comme l'image) ===== */
+.scale-table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;            /* clé pour forcer à tenir */
+}
 
-  /* on force la table à rentrer dans l’écran */
-  .ressenti-block table.scale-table{
-    width: 100% !important;
-    table-layout: fixed !important;
-  }
+.scale-table th,
+.scale-table td{
+  border:1px solid #e5e7eb;
+  padding:10px;
+  vertical-align:middle;
+}
 
-  /* on passe les lignes en "grid" (1 colonne texte + 4 cases radio) */
-  .ressenti-block table.scale-table thead,
-  .ressenti-block table.scale-table tbody{
-    display:block;
-    width:100%;
-  }
+.scale-table th{
+  font-weight:800;
+  text-align:center;
+}
 
-  .ressenti-block table.scale-table thead tr,
-  .ressenti-block table.scale-table tbody tr{
-    display:grid;
-    grid-template-columns: 1fr repeat(4, 42px);
-    align-items:center;
-  }
+.scale-table td:first-child,
+.scale-table th:first-child{
+  text-align:left;
+}
 
-  .ressenti-block table.scale-table th,
-  .ressenti-block table.scale-table td{
-    box-sizing:border-box;
-    padding:6px 4px;
-    border:1px solid var(--border);
-    text-align:center;
-  }
+/* largeur colonnes : 1ère (critère) + 4 niveaux */
+.scale-table th:first-child,
+.scale-table td:first-child{
+  width:44%;
+}
 
-  .ressenti-block table.scale-table th{
-    font-size:0.72rem;
+.scale-table th.center,
+.scale-table td.center{
+  width:14%;
+  text-align:center;
+}
+
+/* Mobile iPhone : tout tient sans scroll */
+@media (max-width: 430px){
+  .scale-table th,
+  .scale-table td{
+    padding:6px;               /* moins d'espace */
+    font-size:0.85rem;         /* texte plus petit */
     line-height:1.1;
-    white-space:normal;
   }
 
-  .ressenti-block table.scale-table th:first-child,
-  .ressenti-block table.scale-table td:first-child{
-    text-align:left;
-    font-size:0.85rem;
-    white-space:normal;
+  .scale-table th:first-child,
+  .scale-table td:first-child{
+    width:48%;
   }
 
-  .ressenti-block table.scale-table input[type="radio"]{
-    transform: scale(1.05);
+  .scale-table th.center,
+  .scale-table td.center{
+    width:13%;
+  }
+
+  /* radios plus petits mais cliquables */
+  .scale-table input[type="radio"]{
+    transform: scale(1.0);
   }
 }
+/* ===== Raccourci N1/N2 sur mobile ===== */
+.lvl-short{ display:none; }
+@media (max-width:430px){
+  .lvl-long{ display:none; }
+  .lvl-short{ display:inline; }
+}
+
+/* ===== Wrapper : PAS de scroll horizontal ===== */
+.scale-wrap{
+  width:100%;
+  overflow-x:hidden;   /* important */
+}
+
+/* ===== Table ressenti responsive ===== */
+.scale-table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;  /* clé */
+}
+
+.scale-table th,
+.scale-table td{
+  border:1px solid #e5e7eb;
+  padding:10px;
+  vertical-align:middle;
+}
+
+.scale-table th{
+  font-weight:800;
+  text-align:center;
+}
+
+.scale-table td:first-child,
+.scale-table th:first-child{
+  text-align:left;
+  width:44%;
+}
+
+.scale-table td.center,
+.scale-table th.center{
+  width:14%;
+  text-align:center;
+}
+
+/* iPhone */
+@media (max-width:430px){
+  .scale-table th,
+  .scale-table td{
+    padding:6px;
+    font-size:0.85rem;
+    line-height:1.1;
+  }
+
+  .scale-table td:first-child,
+  .scale-table th:first-child{
+    width:48%;
+  }
+
+  .scale-table td.center,
+  .scale-table th.center{
+    width:13%;
+  }
+}
+
   </style>
 
 
@@ -4187,67 +4259,76 @@ function renderLessons(student) {
         </div>
 
         <div class="ressenti-block" style="margin-top:10px;">
-          <label>Échelle de ressenti – je me situe pour chaque ligne :</label>
-          <div class="scroll-table">
-            <table class="scale-table">
-              <thead>
-              <tr>
-                <th>Critère</th>
-                <th class="res1 center">Niveau 1</th>
-                <th class="res2 center">Niveau 2</th>
-                <th class="res3 center">Niveau 3</th>
-                <th class="res4 center">Niveau 4</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>Perception de l’effort</td>
-                ${[1,2,3,4].map(n => `
-                  <td class="res${n} center">
-                    <input type="radio"
-                           name="effort_${index}"
-                           data-lesson="${index}"
-                           data-field="effortLevel"
-                           value="${n}" ${lesson.effortLevel === String(n) ? "checked" : ""}>
-                  </td>`).join("")}
-              </tr>
-              <tr>
-                <td>Sensations musculaires</td>
-                ${[1,2,3,4].map(n => `
-                  <td class="res${n} center">
-                    <input type="radio"
-                           name="muscles_${index}"
-                           data-lesson="${index}"
-                           data-field="musclesLevel"
-                           value="${n}" ${lesson.musclesLevel === String(n) ? "checked" : ""}>
-                  </td>`).join("")}
-              </tr>
-              <tr>
-                <td>Sensations respiratoires</td>
-                ${[1,2,3,4].map(n => `
-                  <td class="res${n} center">
-                    <input type="radio"
-                           name="breath_${index}"
-                           data-lesson="${index}"
-                           data-field="breathLevel"
-                           value="${n}" ${lesson.breathLevel === String(n) ? "checked" : ""}>
-                  </td>`).join("")}
-              </tr>
-              <tr>
-                <td>Sensation de chaleur</td>
-                ${[1,2,3,4].map(n => `
-                  <td class="res${n} center">
-                    <input type="radio"
-                           name="heat_${index}"
-                           data-lesson="${index}"
-                           data-field="heatLevel"
-                           value="${n}" ${lesson.heatLevel === String(n) ? "checked" : ""}>
-                  </td>`).join("")}
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+  <label>Échelle de ressenti – je me situe pour chaque ligne :</label>
+
+  <div class="ressenti-cards">
+
+    <div class="ressenti-row">
+      <div class="ressenti-title">Perception de l’effort</div>
+      <div class="ressenti-options">
+        ${[1,2,3,4].map(n => `
+          <label class="ressenti-opt res${n}">
+            <input type="radio"
+                   name="effort_${index}"
+                   data-lesson="${index}"
+                   data-field="effortLevel"
+                   value="${n}" ${lesson.effortLevel === String(n) ? "checked" : ""}>
+            <span>N${n}</span>
+          </label>
+        `).join("")}
+      </div>
+    </div>
+
+    <div class="ressenti-row">
+      <div class="ressenti-title">Sensations musculaires</div>
+      <div class="ressenti-options">
+        ${[1,2,3,4].map(n => `
+          <label class="ressenti-opt res${n}">
+            <input type="radio"
+                   name="muscles_${index}"
+                   data-lesson="${index}"
+                   data-field="musclesLevel"
+                   value="${n}" ${lesson.musclesLevel === String(n) ? "checked" : ""}>
+            <span>N${n}</span>
+          </label>
+        `).join("")}
+      </div>
+    </div>
+
+    <div class="ressenti-row">
+      <div class="ressenti-title">Sensations respiratoires</div>
+      <div class="ressenti-options">
+        ${[1,2,3,4].map(n => `
+          <label class="ressenti-opt res${n}">
+            <input type="radio"
+                   name="breath_${index}"
+                   data-lesson="${index}"
+                   data-field="breathLevel"
+                   value="${n}" ${lesson.breathLevel === String(n) ? "checked" : ""}>
+            <span>N${n}</span>
+          </label>
+        `).join("")}
+      </div>
+    </div>
+
+    <div class="ressenti-row">
+      <div class="ressenti-title">Sensation de chaleur</div>
+      <div class="ressenti-options">
+        ${[1,2,3,4].map(n => `
+          <label class="ressenti-opt res${n}">
+            <input type="radio"
+                   name="heat_${index}"
+                   data-lesson="${index}"
+                   data-field="heatLevel"
+                   value="${n}" ${lesson.heatLevel === String(n) ? "checked" : ""}>
+            <span>N${n}</span>
+          </label>
+        `).join("")}
+      </div>
+    </div>
+
+  </div>
+</div>
 
         <div class="lesson-validation-block" style="margin-top:10px;">
           <div>
@@ -4874,67 +4955,76 @@ function renderLessons(student) {
        
       
       <div class="ressenti-block" style="margin-top:10px;">
-        <label>Échelle de ressenti – je me situe pour chaque ligne :</label>
-        <div class="scroll-table">
-          <table class="scale-table">
-            <thead>
-            <tr>
-              <th>Critère</th>
-              <th class="res1 center">Niveau 1</th>
-              <th class="res2 center">Niveau 2</th>
-              <th class="res3 center">Niveau 3</th>
-              <th class="res4 center">Niveau 4</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>Perception de l’effort</td>
-              ${[1,2,3,4].map(n => `
-                <td class="res${n} center">
-                  <input type="radio"
-                         name="effort_${index}"
-                         data-lesson="${index}"
-                         data-field="effortLevel"
-                         value="${n}" ${lesson.effortLevel === String(n) ? "checked" : ""}>
-                </td>`).join("")}
-            </tr>
-            <tr>
-              <td>Sensations musculaires</td>
-              ${[1,2,3,4].map(n => `
-                <td class="res${n} center">
-                  <input type="radio"
-                         name="muscles_${index}"
-                         data-lesson="${index}"
-                         data-field="musclesLevel"
-                         value="${n}" ${lesson.musclesLevel === String(n) ? "checked" : ""}>
-                </td>`).join("")}
-            </tr>
-            <tr>
-              <td>Sensations respiratoires</td>
-              ${[1,2,3,4].map(n => `
-                <td class="res${n} center">
-                  <input type="radio"
-                         name="breath_${index}"
-                         data-lesson="${index}"
-                         data-field="breathLevel"
-                         value="${n}" ${lesson.breathLevel === String(n) ? "checked" : ""}>
-                </td>`).join("")}
-            </tr>
-            <tr>
-              <td>Sensation de chaleur</td>
-              ${[1,2,3,4].map(n => `
-                <td class="res${n} center">
-                  <input type="radio"
-                         name="heat_${index}"
-                         data-lesson="${index}"
-                         data-field="heatLevel"
-                         value="${n}" ${lesson.heatLevel === String(n) ? "checked" : ""}>
-                </td>`).join("")}
-            </tr>
-            </tbody>
-          </table>
-        </div>
+  <label>Échelle de ressenti – je me situe pour chaque ligne :</label>
+
+  <div class="ressenti-cards">
+
+    <div class="ressenti-row">
+      <div class="ressenti-title">Perception de l’effort</div>
+      <div class="ressenti-options">
+        ${[1,2,3,4].map(n => `
+          <label class="ressenti-opt res${n}">
+            <input type="radio"
+                   name="effort_${index}"
+                   data-lesson="${index}"
+                   data-field="effortLevel"
+                   value="${n}" ${lesson.effortLevel === String(n) ? "checked" : ""}>
+            <span>N${n}</span>
+          </label>
+        `).join("")}
       </div>
+    </div>
+
+    <div class="ressenti-row">
+      <div class="ressenti-title">Sensations musculaires</div>
+      <div class="ressenti-options">
+        ${[1,2,3,4].map(n => `
+          <label class="ressenti-opt res${n}">
+            <input type="radio"
+                   name="muscles_${index}"
+                   data-lesson="${index}"
+                   data-field="musclesLevel"
+                   value="${n}" ${lesson.musclesLevel === String(n) ? "checked" : ""}>
+            <span>N${n}</span>
+          </label>
+        `).join("")}
+      </div>
+    </div>
+
+    <div class="ressenti-row">
+      <div class="ressenti-title">Sensations respiratoires</div>
+      <div class="ressenti-options">
+        ${[1,2,3,4].map(n => `
+          <label class="ressenti-opt res${n}">
+            <input type="radio"
+                   name="breath_${index}"
+                   data-lesson="${index}"
+                   data-field="breathLevel"
+                   value="${n}" ${lesson.breathLevel === String(n) ? "checked" : ""}>
+            <span>N${n}</span>
+          </label>
+        `).join("")}
+      </div>
+    </div>
+
+    <div class="ressenti-row">
+      <div class="ressenti-title">Sensation de chaleur</div>
+      <div class="ressenti-options">
+        ${[1,2,3,4].map(n => `
+          <label class="ressenti-opt res${n}">
+            <input type="radio"
+                   name="heat_${index}"
+                   data-lesson="${index}"
+                   data-field="heatLevel"
+                   value="${n}" ${lesson.heatLevel === String(n) ? "checked" : ""}>
+            <span>N${n}</span>
+          </label>
+        `).join("")}
+      </div>
+    </div>
+
+  </div>
+</div>
 
       <div class="lesson-validation-block" style="margin-top:10px;">
         <div>
@@ -5404,15 +5494,15 @@ else if (index === 3) {
 
         <div class="ressenti-block">
           <label>Échelle de ressenti – je me situe pour chaque ligne :</label>
-          <div class="scroll-table">
+            <div class="scale-wrap">
             <table class="scale-table">
               <thead>
               <tr>
                 <th>Critère</th>
-                <th class="res1 center">Niveau 1</th>
-                <th class="res2 center">Niveau 2</th>
-                <th class="res3 center">Niveau 3</th>
-                <th class="res4 center">Niveau 4</th>
+                <th class="res1 center">N1</th>
+                <th class="res2 center">N2</th>
+                <th class="res3 center">N3</th>
+                <th class="res4 center">N4</th>
               </tr>
               </thead>
               <tbody>
